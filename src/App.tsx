@@ -1,11 +1,17 @@
+// import Header from "./Header";
+
 function App() {
   return (
     <>
-      <h1 className="m-6 mt-3 flex  rounded-lg  border-2 border-black bg-gray-300 p-4 text-blue-900 hover:bg-gray-600">
-        Portfolio
-      </h1>
+      <div className="from-purple-bg-1 via-purple-bg-2 to-orange-bg-1 h-screen bg-gradient-to-br via-45%">
+        <div className="rounded-lg">
+          <h1 className="h-[640px] rounded-lg bg-gray-300 text-9xl font-bold text-slate-900">
+            Portfolio
+          </h1>
 
-      <p className="m-1 mt-2 flex p-3 text-white">Hello hello ehllo</p>
+          <p className="m-1 mt-2 flex p-3 text-white">Hello hello ehllo</p>
+        </div>
+      </div>
     </>
   );
 }
