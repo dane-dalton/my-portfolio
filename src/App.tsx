@@ -1,6 +1,5 @@
-// import Header from "./Header";
 import { Route, Routes } from "react-router-dom";
-import HomeLayout from "./Layouts/HomeLayout";
+import HomeLayout from "./layouts/HomeLayout";
 import HomePage from "./HomePage";
 import Missing from "./Missing";
 

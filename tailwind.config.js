@@ -9,6 +9,17 @@ export default {
         "pink-bg-1": "#dd3086",
         "orange-bg-1": "#e7a400",
       },
+      boxShadow: {
+        centered: "0 0 24px 24px rgb(148 163 184 / 1)",
+      },
+    },
+    screens: {
+      xs: "480px",
+      ss: "620px",
+      sm: "768px",
+      md: "1060px",
+      lg: "1200px",
+      xl: "1700px",
     },
   },
   plugins: [],
