@@ -2,7 +2,7 @@ import {
   ImageBottomRight,
   LeftScrollArrow,
   RightScrollArrow,
-} from "./components";
+} from "../components";
 
 function HomePage() {
   return (
