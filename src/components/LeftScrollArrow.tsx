@@ -19,7 +19,7 @@ function LeftScrollArrow({ pagesIdx }: ScrollArrowProps) {
         to={`/${prevPage}`}
         className="absolute left-0 top-1/2 z-20 h-[100px] w-[100px]"
       />
-      <div className="absolute left-0 top-1/2 animate-pulse rounded-full bg-slate-400 text-slate-200 shadow-centered">
+      <div className="shadow-centered absolute left-0 top-1/2 animate-pulse rounded-full bg-slate-400 text-slate-900">
         <VscTriangleLeft className="h-[100px] w-[100px]" />
       </div>
     </>

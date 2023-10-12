@@ -16,7 +16,7 @@ function RightScrollArrow({ pagesIdx }: ScrollArrowProps) {
         to={`/${nextPage}`}
         className="absolute right-0 top-1/2 z-20 h-[100px] w-[100px]"
       />
-      <div className="absolute right-0 top-1/2 animate-pulse rounded-full bg-slate-400 text-slate-200 shadow-centered">
+      <div className="bg-slate-400 shadow-centered absolute right-0 top-1/2 animate-bounce rounded-full text-slate-900">
         <VscTriangleRight className="h-[100px] w-[100px]" />
       </div>
     </>

@@ -8,6 +8,7 @@ export default {
         "purple-bg-2": "#9d1999",
         "pink-bg-1": "#dd3086",
         "orange-bg-1": "#e7a400",
+        "orange-text": "#e47f2a",
       },
       boxShadow: {
         centered: "0 0 24px 24px rgb(148 163 184 / 1)",
