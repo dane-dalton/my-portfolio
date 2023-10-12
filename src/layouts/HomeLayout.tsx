@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import GitHubButton from "./GitHubButton";
 import LinkedInButton from "./LinkedInButton";
+import { ImageBottomRight } from "../components";
 
 function HomeLayout() {
   return (
@@ -11,6 +12,7 @@ function HomeLayout() {
             <Outlet />
             <GitHubButton />
             <LinkedInButton />
+            <ImageBottomRight />
           </div>
         </div>
       </div>
