@@ -51,6 +51,38 @@ body {
   );
 }
 
+.stroke-header {
+  font-family: Bebas Neue;
+  color: black;
+  -webkit-text-stroke: 4px white;
+  text-shadow: white 0 0 20px;
+}
+
+.stroke-normal {
+  color: black;
+  -webkit-text-stroke: 1px white;
+  text-shadow: white 0 0 10px;
+}
+
+.sky-shadow-blue {
+  box-shadow: 0 0 200px 200px rgba(21, 37, 90, 0.9);
+}
+
+.sky-shadow-violet {
+  box-shadow: 0 0 300px 300px rgba(34, 12, 73, 0.9);
+}
+
+.sky-shadow-violet-2 {
+  box-shadow: 0 0 100px 100px rgba(75, 24, 163, 0.9);
+}
+.sky-shadow-violet-3 {
+  box-shadow: 0 0 200px 200px rgba(28, 8, 63, 0.7);
+}
+
+.star {
+  box-shadow: 0 0 10px 3px white;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
