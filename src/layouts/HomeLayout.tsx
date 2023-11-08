@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import GitHubButton from "./GitHubButton";
 import LinkedInButton from "./LinkedInButton";
-import { ImageBottomRight } from "../components";
+import { ImageBottomRight, StarryBackground } from "../components";
 
 function HomeLayout() {
   return (
@@ -9,6 +9,7 @@ function HomeLayout() {
       <div className="flex h-full w-full items-center justify-center bg-slate-900">
         <div className="absolute inset-8 flex items-center justify-center rounded-3xl bg-white font-bold">
           <div className="absolute inset-4 overflow-hidden rounded-3xl bg-slate-900">
+            <StarryBackground />
             <Outlet />
             <GitHubButton />
             <LinkedInButton />

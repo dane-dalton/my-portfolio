@@ -1,6 +1,6 @@
 function StarryBackground() {
   return (
-    <>
+    <div className="absolute z-10 h-full w-full">
       <div className="sky-shadow-violet-2 absolute left-[12rem] top-[15rem]" />
       <div className="sky-shadow-blue absolute left-[6rem] top-[25rem]" />
       <div className="sky-shadow-violet-3 absolute left-[20rem] top-[2rem]" />
@@ -17,7 +17,7 @@ function StarryBackground() {
       <div className="star absolute right-[9rem] top-[4rem]" />
       <div className="star absolute right-[5rem] top-[3rem]" />
       <div className="star absolute right-[6rem] top-[9rem]" />
-    </>
+    </div>
   );
 }
 
