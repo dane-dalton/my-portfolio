@@ -64,6 +64,10 @@ body {
   text-shadow: white 0 0 10px;
 }
 
+.project-border-shadow {
+  box-shadow: 0 0 35px white;
+}
+
 .sky-shadow-blue {
   box-shadow: 0 0 200px 200px rgba(21, 37, 90, 0.9);
 }
