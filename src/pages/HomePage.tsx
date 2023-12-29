@@ -1,4 +1,4 @@
-import { RightScrollArrow } from "../components";
+import { RightScrollArrow, PageHeader } from "../components";
 
 function HomePage() {
   const pageIdx = 0;
@@ -8,15 +8,13 @@ function HomePage() {
       <h1 className="stroke-normal mt-[3rem] text-center text-3xl">
         Hello, my name is
       </h1>
-      <h2 className="stroke-header -mb-[4rem] -mt-[2rem] text-[12rem]">
-        Dane Dalton
-      </h2>
-      <section className="mt-[5rem] flex flex-col items-start justify-center gap-[5rem] text-center text-[35px]">
-        <p className="stroke-normal max-w-[700px]">
+      <PageHeader header="Dane Dalton" />
+      <section className="stroke-normal mx-[24rem] flex flex-col items-start justify-center gap-8 text-center text-[35px]">
+        <p>
           This website is a portfolio for some of my projects, a showcase of my
           creative expression, and an opportunity to learn TypeScript.
         </p>
-        <p className="stroke-normal max-w-[700px]">
+        <p>
           I had a lot of fun making this portfolio. I hope you enjoy it too!
         </p>
         <p className="stroke-normal absolute right-[10rem] top-[52%] max-w-[300px] text-center">

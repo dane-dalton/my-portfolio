@@ -1,11 +1,10 @@
-import { LeftScrollArrow, RightScrollArrow } from "../components";
-import OtherPagesHeader from "../components/OtherPagesHeader";
+import { LeftScrollArrow, RightScrollArrow, PageHeader } from "../components";
 
 function AboutPage() {
   const pageIdx = 1;
   return (
     <div className="absolute z-10 flex h-full w-full flex-col items-center">
-      <OtherPagesHeader header="About Me" />
+      <PageHeader header="About Me" />
       <LeftScrollArrow pagesIdx={pageIdx} />
       <RightScrollArrow pagesIdx={pageIdx} />
       <section className="mx-[24rem] flex flex-col items-center justify-center gap-4 text-center text-xl text-slate-100">

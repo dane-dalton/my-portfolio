@@ -2,7 +2,7 @@ type HeaderProps = {
   header: string;
 };
 
-function OtherPagesHeader({ header }: HeaderProps) {
+function PageHeader({ header }: HeaderProps) {
   return (
     <h1 className="stroke-header mt-[1rem] text-center text-[12rem] leading-[12.5rem]">
       {header}
@@ -10,4 +10,4 @@ function OtherPagesHeader({ header }: HeaderProps) {
   );
 }
 
-export default OtherPagesHeader;
+export default PageHeader;
