@@ -17,9 +17,6 @@ function HomePage() {
         <p>
           I had a lot of fun making this portfolio. I hope you enjoy it too!
         </p>
-        <p className="stroke-normal absolute right-[10rem] top-[52%] max-w-[300px] text-center">
-          About Me
-        </p>
       </section>
     </div>
   );

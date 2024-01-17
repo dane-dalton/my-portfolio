@@ -4,6 +4,7 @@ type ProjectProps = {
   project: {
     title: string;
     desc: string;
+    thumbnailImg: string;
     skills: string[];
   };
 };
@@ -11,17 +12,23 @@ type ProjectProps = {
 function Project({ project }: ProjectProps) {
   const title = project.title;
   const desc = project.desc;
+  const thumbImg = project.thumbnailImg;
   const skills = project.skills;
 
   const [projectOpen, setProjectOpen] = useState(false);
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <h2 className="stroke-normal text-center text-3xl">{title}</h2>
+      {/* <h2 className="stroke-normal text-center text-3xl">{title}</h2> */}
       <div
         onClick={() => setProjectOpen(true)}
-        className="project-border-shadow mt-4 h-[10rem] w-[10rem] cursor-pointer rounded-lg border-2 border-white bg-black transition-all  duration-[25ms] ease-linear hover:h-[15rem] hover:w-[15rem]"
-      ></div>
+        className="project-border-shadow mt-4 h-[10rem] w-[10rem] cursor-pointer rounded-lg border-2 border-white bg-black transition-all duration-[25ms] ease-linear hover:h-[15rem] hover:w-[15rem]"
+      >
+        <img
+          src={thumbImg}
+          className="h-[10rem] w-[10rem] rounded-lg object-center p-1 pb-2 transition-all duration-[25ms] ease-linear hover:h-[15rem] hover:w-[15rem]"
+        />
+      </div>
       {projectOpen ? (
         <>
           <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none">
