@@ -37,9 +37,7 @@ function Project({ project }: ProjectProps) {
               <div className="relative flex w-full flex-col rounded-lg border-0 bg-white shadow-lg outline-none focus:outline-none">
                 {/*header*/}
                 <div className="flex items-start justify-between rounded-t border-b border-solid border-slate-200 p-5">
-                  <h3 className="text-3xl font-semibold">
-                    Project Information
-                  </h3>
+                  <h3 className="text-3xl font-semibold">{title}</h3>
                   <button
                     className="float-right ml-auto border-0 bg-transparent p-1 text-3xl font-semibold leading-none text-black opacity-5 outline-none focus:outline-none"
                     onClick={() => setProjectOpen(false)}
@@ -50,7 +48,20 @@ function Project({ project }: ProjectProps) {
                   </button>
                 </div>
                 {/*body*/}
-
+                <div>
+                  <div>
+                    <h4>Description: </h4>
+                    <p>{desc}</p>
+                  </div>
+                  <div>
+                    <h4>Skills: </h4>
+                    <ol>
+                      {skills.map((skill, skillIdx) => (
+                        <li key={skillIdx}>{skill}</li>
+                      ))}
+                    </ol>
+                  </div>
+                </div>
                 <div></div>
                 {/*footer*/}
                 <div className="flex items-center justify-center rounded-b border-t border-solid border-slate-200 p-6">

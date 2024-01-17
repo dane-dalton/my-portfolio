@@ -10,14 +10,14 @@ import {
 export const projects = [
   {
     id: "portal",
-    title: "Portal",
+    title: "E-Learning Portal",
     desc: "Portal for 500+ students, parents, teachers, TAs, and admins. Features included are authorization/authentication, upcoming schedule, a schedule calendar, class rescheduling, worksheets made of problem sets, and a G-mail inspired messaging system. This portal is what taught me React JS, building a product from start to production, and how to come up with my own creative solutions that are beyond a Google search away.",
     thumbnailImg: portalImg,
     skills: ["React JS", "TailwindCSS", "Docker", "Axios", "Vite", "MathJax"],
   },
   {
     id: "portfolio",
-    title: "Portfolio",
+    title: "My Portfolio",
     desc: "portalportalportal poratl aplsadf aslkdjfas faslf saldf jsadlf asl flasfklas fklas fl",
     thumbnailImg: portfolioImg,
     skills: ["TypeScript", "React JS", "TailwindCSS", "Vite"],
@@ -45,7 +45,7 @@ export const projects = [
   },
   {
     id: "lights",
-    title: "LEDs",
+    title: "LED Patterns with Arduino",
     desc: "portalportalportal poratl aplsadf aslkdjfas faslf saldf jsadlf asl flasfklas fklas fl",
     thumbnailImg: ledImg,
     skills: ["Arduino"],
