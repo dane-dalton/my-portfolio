@@ -8,12 +8,10 @@ function AboutPage() {
       <PageHeader header="About Me" />
       <LeftScrollArrow pagesIdx={pageIdx} />
       <RightScrollArrow pagesIdx={pageIdx} />
-      <section className="mx-[24rem] my-8 flex h-full flex-col items-center justify-between gap-4 text-center text-xl text-slate-200">
+      <section className="flex h-full flex-col items-center justify-between gap-4 text-center text-xl text-slate-200 xs:mx-[14rem] xs:my-2 md:mx-[20rem] md:my-4 xl:mx-[24rem] xl:my-8">
         <p>
-          With a background spanning Arduino programming, digital circuit
-          design, computer building, CAD, GIS, and web development, I am proud
-          to say I've built a strong foundation in technology that helps me
-          excel when I am handed a new problem or concept.
+          I am proud to say I've built a strong foundation in technology that
+          helps me excel when I am handed a new problem or concept.
         </p>
         <p>
           Nothing makes me more excited than solving a problem that has stumped
