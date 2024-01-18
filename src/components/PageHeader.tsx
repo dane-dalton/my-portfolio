@@ -4,7 +4,7 @@ type HeaderProps = {
 
 function PageHeader({ header }: HeaderProps) {
   return (
-    <h1 className="stroke-header mt-[1rem] text-center xs:text-[8rem] xs:leading-[8rem] lg:text-[12rem] lg:leading-[12.5rem]">
+    <h1 className="stroke-header mt-[1rem] text-center xs:text-[8rem] xs:leading-[8rem] lg:text-[10rem] lg:leading-[10rem] xl:text-[12rem] xl:leading-[12.5rem]">
       {header}
     </h1>
   );
