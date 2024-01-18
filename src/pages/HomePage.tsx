@@ -9,13 +9,10 @@ function HomePage() {
         Hello, my name is
       </h1>
       <PageHeader header="Dane Dalton" />
-      <section className="stroke-normal mx-[24rem] flex flex-col items-start justify-center gap-8 text-center text-[35px]">
+      <section className="stroke-home mx-[24rem] text-center text-[3rem]">
         <p>
           This website is a portfolio for some of my projects, a showcase of my
           creative expression, and an opportunity to learn TypeScript.
-        </p>
-        <p>
-          I had a lot of fun making this portfolio. I hope you enjoy it too!
         </p>
       </section>
     </div>

@@ -56,6 +56,6 @@ export const projects = [
     title: "LED Patterns with Arduino",
     desc: "An LED strip with a programmed Arduino glows with various patterns. I was inspired by my own LED light strip I had in my dorm, and I wanted my own patterns for it. The light strip had 4 wires. Red, Blue, Green, and Ground. Giving power to these different values let me adjust the colors for each LED. My favorite pattern mimicked twinkling snow for the winter.",
     thumbnailImg: ledImg,
-    skills: ["Arduino"],
+    skills: ["Arduino Programming"],
   },
 ];

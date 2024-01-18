@@ -58,6 +58,11 @@ body {
   text-shadow: white 0 0 20px;
 }
 
+.stroke-home {
+  color: black;
+  -webkit-text-stroke: 1px white;
+}
+
 .stroke-normal {
   color: black;
   -webkit-text-stroke: 1px white;
