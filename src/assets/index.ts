@@ -5,6 +5,7 @@ import ledImg from "./led_portfolio.png";
 import mastermindImg from "./mastermind_portfolio.png";
 import portalImg from "./portal_portfolio.png";
 import portfolioImg from "./portfolio_portfolio.png";
+import resumePDF from "./resume.pdf";
 
 export {
   photoOfMe,
@@ -14,4 +15,5 @@ export {
   mastermindImg,
   portalImg,
   portfolioImg,
+  resumePDF,
 };
