@@ -8,7 +8,7 @@ function AboutPage() {
       <PageHeader header="About Me" />
       <LeftScrollArrow pagesIdx={pageIdx} />
       <RightScrollArrow pagesIdx={pageIdx} />
-      <section className="flex h-full flex-col items-center justify-between gap-4 text-center text-xl text-slate-200 xs:mx-[14rem] xs:my-2 md:mx-[20rem] md:my-4 xl:mx-[24rem] xl:my-8">
+      <section className="xs:text-md flex h-full flex-col items-center justify-between gap-4 text-center text-slate-200 xs:mx-[14rem] xs:my-0 md:mx-[18rem] md:my-2 md:text-lg lg:mx-[20rem] lg:my-4 lg:text-xl xl:mx-[24rem] xl:my-8">
         <p>
           I am proud to say I've built a strong foundation in technology that
           helps me excel when I am handed a new problem or concept.
