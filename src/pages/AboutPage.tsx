@@ -1,13 +1,18 @@
-import { LeftScrollArrow, RightScrollArrow, PageHeader } from "../components";
+import { useEffect } from "react";
+import usePageIdx from "../hooks/usePageIdx";
+import { PageHeader } from "../components";
 import { resumePDF } from "../assets";
 
 function AboutPage() {
-  const pageIdx = 1;
+  const { setPageIdx } = usePageIdx();
+
+  useEffect(() => {
+    setPageIdx(1);
+  }, []);
+
   return (
     <div className="absolute z-10 flex h-full w-full flex-col items-center">
       <PageHeader header="About Me" />
-      <LeftScrollArrow pagesIdx={pageIdx} />
-      <RightScrollArrow pagesIdx={pageIdx} />
       <section className="xs:text-md flex h-full flex-col items-center justify-between gap-4 text-center text-slate-200 xs:mx-[14rem] xs:my-0 md:mx-[18rem] md:my-2 md:text-lg lg:mx-[20rem] lg:my-2 lg:text-lg xl:mx-[24rem] xl:my-8 xl:text-xl">
         <p>
           I am proud to say I've built a strong foundation in technology that

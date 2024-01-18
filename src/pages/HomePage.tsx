@@ -1,10 +1,16 @@
-import { RightScrollArrow, PageHeader } from "../components";
+import { useEffect } from "react";
+import usePageIdx from "../hooks/usePageIdx";
+import { PageHeader } from "../components";
 
 function HomePage() {
-  const pageIdx = 0;
+  const { setPageIdx } = usePageIdx();
+
+  useEffect(() => {
+    setPageIdx(0);
+  }, []);
+
   return (
     <div className="absolute z-10 flex h-full w-full flex-col items-center">
-      <RightScrollArrow pagesIdx={pageIdx} />
       <h1 className="stroke-normal mt-[3rem] text-center xs:text-xl lg:text-3xl">
         Hello, my name is
       </h1>
