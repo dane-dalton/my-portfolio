@@ -69,6 +69,12 @@ body {
   text-shadow: white 0 0 10px;
 }
 
+.stroke-nav {
+  color: black;
+  -webkit-text-stroke: 1px rgb(148 163 184);
+  text-shadow: rgb(148 163 184) 0 0 10px;
+}
+
 .project-border-shadow {
   box-shadow: 0 0 35px white;
 }
@@ -89,6 +95,10 @@ body {
 }
 
 .star {
+  box-shadow: 0 0 10px 3px white;
+}
+
+.star-nav {
   box-shadow: 0 0 10px 3px white;
 }
 
