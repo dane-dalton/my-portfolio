@@ -13,7 +13,7 @@ function AboutPage() {
   return (
     <div className="absolute z-10 flex h-full w-full flex-col items-center">
       <PageHeader header="About Me" />
-      <section className="xs:text-md flex h-full flex-col items-center justify-between gap-4 text-center text-slate-200 xs:mx-[14rem] xs:my-0 md:mx-[18rem] md:my-2 md:text-lg lg:mx-[20rem] lg:my-2 lg:text-lg xl:mx-[24rem] xl:my-8 xl:text-xl">
+      <section className="xs:text-md flex h-full flex-col items-center justify-between gap-4 text-center text-slate-200 xs:mx-[14rem] xs:my-0 md:mx-[18rem] md:my-2 md:text-lg lg:mx-[20rem] lg:my-2 lg:text-lg xl:mx-[24rem] xl:my-8 xl:text-xl xxl:my-[3rem]">
         <p>
           I am proud to say I've built a strong foundation in technology that
           helps me excel when I am handed a new problem or concept.
