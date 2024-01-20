@@ -11,7 +11,7 @@ export const projects = [
   {
     id: "portal",
     title: "E-Learning Portal",
-    desc: "A new portal for roughly one thousand students, parents, teachers, TAs, and admins. Features included are authorization/authentication, upcoming schedule, a schedule calendar, class rescheduling, worksheets made of problem sets, and a G-mail inspired messaging system. This portal is what taught me React JS, building a product from start to production, and how to come up with my own creative software solutions.",
+    desc: "A new portal for roughly one thousand students, parents, teachers, TAs, and admins. Features included are authorization/authentication, class schedules and rescheduling, worksheets made of problem sets, and an internal messaging system. This portal is what taught me React.js, building a product from start to production, and the confidence to come up with my own creative software solutions.",
     thumbnailImg: portalImg,
     skills: [
       "React JS",
@@ -28,7 +28,7 @@ export const projects = [
     title: "My Portfolio",
     desc: "This project is the portfolio you are currently looking at! I had wanted to make a portfolio website for a while, and after going through the end-to-end development of the Mr. Math portal, I knew I had the skills to build it myself with React. I used this portfolio as an opportunity to learn TypeScript too, since it is something I have been wanting to learn for some time now.",
     thumbnailImg: portfolioImg,
-    skills: ["TypeScript", "React JS", "TailwindCSS", "Vite"],
+    skills: ["TypeScript", "React JS", "TailwindCSS", "Vite", "Vercel"],
   },
   {
     id: "knight",
