@@ -21,7 +21,7 @@ export const projects = [
       "Axios",
       "Vite",
       "MathJax",
-      "UI/UX Design",
+      "UI/UX",
     ],
   },
   {
