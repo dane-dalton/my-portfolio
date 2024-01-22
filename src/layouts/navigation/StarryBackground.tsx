@@ -1,5 +1,5 @@
-import usePageIdx from "../hooks/usePageIdx";
-import { AboutStar, HomeStar, ProjectsStar } from ".";
+import usePageIdx from "../../hooks/usePageIdx";
+import { AboutStar, HomeStar, ProjectsStar } from "../../components";
 
 function StarryBackground() {
   const { pageIdx } = usePageIdx();

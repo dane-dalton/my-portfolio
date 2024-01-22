@@ -1,7 +1,8 @@
 import { Outlet } from "react-router-dom";
 import GitHubButton from "./GitHubButton";
 import LinkedInButton from "./LinkedInButton";
-import { ImageBottomRight, StarryBackground } from "../components";
+import { ImageBottomRight } from "../components";
+import { MobileNav, StarryBackground } from "./navigation";
 
 function HomeLayout() {
   return (
@@ -10,6 +11,7 @@ function HomeLayout() {
         <div className="absolute inset-1 flex items-center justify-center rounded-3xl bg-white font-bold sm:inset-8">
           <div className="absolute inset-4 overflow-hidden rounded-3xl bg-slate-900">
             <StarryBackground />
+            <MobileNav />
             <Outlet />
             <GitHubButton />
             <LinkedInButton />

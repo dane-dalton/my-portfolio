@@ -3,7 +3,6 @@ import HomeStar from "./HomeStar";
 import ImageBottomRight from "./ImageBottomRight";
 import LeftScrollArrow from "./LeftScrollArrow";
 import RightScrollArrow from "./RightScrollArrow";
-import StarryBackground from "./StarryBackground";
 import PageHeader from "./PageHeader";
 import Project from "./Project";
 import ProjectsStar from "./ProjectsStar";
@@ -14,7 +13,6 @@ export {
   ImageBottomRight,
   LeftScrollArrow,
   RightScrollArrow,
-  StarryBackground,
   PageHeader,
   Project,
   ProjectsStar,
