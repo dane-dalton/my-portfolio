@@ -15,13 +15,13 @@ function HomePage() {
         Hello, my name is
       </h1>
       <PageHeader header="Dane Dalton" />
-      <section className="stroke-home text-center max-md:text-slate-200 xs:mx-[8rem] xs:text-[1.5rem] md:mx-[20rem] md:text-[2rem] xl:mx-[24rem] xl:text-[3rem]">
+      <section className="stroke-home mx-[2rem] text-center text-[1.5rem] max-md:text-slate-200 xs:mx-[4rem] md:mx-[20rem] md:text-[2rem] xl:mx-[24rem] xl:text-[3rem]">
         <p>
           This website is a portfolio for some of my projects, a showcase of my
           creative expression, and an opportunity to learn TypeScript.
         </p>
-        <p className="mt-4 sm:hidden">
-          Please check out the desktop view as well!
+        <p className="mt-8 sm:hidden">
+          Please check it out on desktop too for a superior viewing experience!
         </p>
       </section>
     </div>

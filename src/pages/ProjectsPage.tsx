@@ -13,7 +13,7 @@ function ProjectsPage() {
   return (
     <div className="absolute z-10 flex h-full w-full flex-col items-center">
       <PageHeader header="Projects" />
-      <section className="mx-[10rem] md:mx-[18rem] lg:mx-[24rem]">
+      <section className="mx-[2rem] sm:mx-[10rem] md:mx-[18rem] lg:mx-[24rem]">
         <ul className="grid grid-cols-2 items-center justify-items-center gap-8 md:grid-cols-3">
           {projects.map((project) => (
             <li key={project.id}>
