@@ -19,12 +19,13 @@ function HomeLayout() {
             <ImageBottomRight />
             <SparklesCore
               id="tsparticlesfullpage"
-              background="bg-slate-900"
-              minSize={0.6}
+              background="transparent"
+              speed={1}
+              minSize={0.2}
               maxSize={1.4}
-              particleDensity={100}
+              particleDensity={66}
               className="relative z-10 h-full w-full"
-              particleColor="#FFFFFF"
+              particleColor="#ffffff"
             />
           </div>
         </div>
