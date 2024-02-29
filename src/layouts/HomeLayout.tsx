@@ -3,6 +3,7 @@ import GitHubButton from "./GitHubButton";
 import LinkedInButton from "./LinkedInButton";
 import { ImageBottomRight } from "../components";
 import { MobileNav, StarryBackground } from "./navigation";
+import { SparklesCore } from "../components/ui/sparkles";
 
 function HomeLayout() {
   return (
@@ -16,6 +17,15 @@ function HomeLayout() {
             <GitHubButton />
             <LinkedInButton />
             <ImageBottomRight />
+            <SparklesCore
+              id="tsparticlesfullpage"
+              background="bg-slate-900"
+              minSize={0.6}
+              maxSize={1.4}
+              particleDensity={100}
+              className="relative z-10 h-full w-full"
+              particleColor="#FFFFFF"
+            />
           </div>
         </div>
       </div>

@@ -52,7 +52,7 @@ function StarryBackground() {
         </div>
       )}
       {onProjectsPage() && (
-        <div className="hidden sm:flex">
+        <div className="absolute z-30 hidden sm:flex">
           <AboutStar />
           <HomeStar />
         </div>
