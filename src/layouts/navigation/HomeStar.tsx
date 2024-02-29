@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function HomeStar() {
   return (
     <>
-      <div className="star-nav absolute left-[2.5rem] top-[26.5rem] z-20 h-[12px] w-[12px] animate-pulse rounded-full bg-slate-400" />
+      <div className="star-nav absolute left-[2.5rem] top-[26.5rem] z-20 h-[12px] w-[12px] animate-pulse rounded-full bg-slate-300" />
       <Link
         to={"/"}
         className="absolute left-[1.2rem] top-[25.5rem] z-20 h-[4rem] w-[4rem] cursor-pointer"
