@@ -41,7 +41,7 @@ function MobileNav() {
   }
 
   return (
-    <div className="absolute right-[1rem] top-[1rem] z-20 flex flex-1 items-center justify-end sm:hidden">
+    <div className="absolute right-[1rem] top-[1rem] z-30 flex flex-1 items-center justify-end sm:hidden">
       <button
         type="button"
         onClick={() => setNavOpen((prev) => !prev)}
