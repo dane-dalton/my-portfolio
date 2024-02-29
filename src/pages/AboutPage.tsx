@@ -13,7 +13,7 @@ function AboutPage() {
   }, []);
 
   return (
-    <div className="absolute z-10 flex h-full w-full flex-col items-center">
+    <div className="absolute z-20 flex h-full w-full flex-col items-center">
       <PageHeader header="About Me" />
       <section className="xs:text-md mx-[1rem] my-0 flex h-full flex-col items-center justify-between gap-4 text-center text-slate-200 sm:mx-[12rem] md:mx-[16rem] md:my-2 md:text-lg lg:mx-[18rem] lg:my-2 lg:text-lg xl:mx-[24rem] xl:mb-8 xl:mt-2 xl:text-xl xxl:my-[3rem]">
         <TextGenerateEffect words={aboutText1} />
