@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import usePageIdx from "../hooks/usePageIdx";
 import { PageHeader } from "../components";
+import { TextGenerateEffect } from "../components/ui/text-generate-effect";
+import { homeText, homeTextMobile } from "../constants/pageText.ts";
 
 function HomePage() {
   const { setPageIdx } = usePageIdx();
@@ -15,14 +17,9 @@ function HomePage() {
         Hello, my name is
       </h1>
       <PageHeader header="Dane Dalton" />
-      <section className="stroke-home mx-[2rem] flex h-1/2 items-center text-center text-[1.5rem] max-md:text-slate-200 xs:mx-[4rem] md:mx-[20rem] md:text-[2rem] xl:mx-[23rem] xl:text-[2.5rem]">
-        <p>
-          This website is a portfolio for some of my projects, a showcase of my
-          creative expression, and an opportunity to learn TypeScript.
-        </p>
-        <p className="mt-8 sm:hidden">
-          Please check it out on desktop too for a superior viewing experience!
-        </p>
+      <section className="md:stroke-home mx-[2rem] flex h-1/2 flex-col items-center text-center text-[1.5rem] text-slate-200 xs:mx-[4rem] md:mx-[20rem] md:text-[2rem] xl:mx-[23rem] xl:text-[2.5rem]">
+        <TextGenerateEffect words={homeText} />
+        <TextGenerateEffect words={homeTextMobile} className="sm:hidden" />
       </section>
     </div>
   );

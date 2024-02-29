@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { classNames } from "../../util";
+import { classNames } from "../../utils";
 
 import { List, X } from "@phosphor-icons/react";
 
