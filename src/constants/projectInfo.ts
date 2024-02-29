@@ -29,7 +29,14 @@ export const projects = [
     title: "My Portfolio",
     desc: "This project is the portfolio you are currently looking at! I had wanted to make a portfolio website for a while, and after going through the end-to-end development of the Mr. Math portal, I knew I had the skills to build it from scratch with React. I used this portfolio as an opportunity to learn TypeScript too, since it is something I have been wanting to learn for some time now. The theme is inspired by a photo I took from a bridge in Chattanooga at sunset.",
     thumbnailImg: portfolioImg,
-    skills: ["TypeScript", "React.js", "TailwindCSS", "Vite", "Vercel"],
+    skills: [
+      "TypeScript",
+      "React.js",
+      "TailwindCSS",
+      "Vite",
+      "Vercel",
+      "Aceternity UI",
+    ],
   },
   {
     id: "knight",
