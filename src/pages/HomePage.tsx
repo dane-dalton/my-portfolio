@@ -12,7 +12,7 @@ function HomePage() {
   }, []);
 
   return (
-    <div className="absolute z-10 flex h-full w-full flex-col items-center">
+    <div className="absolute z-20 flex h-full w-full flex-col items-center">
       <h1 className="stroke-normal mt-[3rem] text-center text-xl lg:text-3xl">
         Hello, my name is
       </h1>
