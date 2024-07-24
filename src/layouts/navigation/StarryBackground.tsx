@@ -40,19 +40,19 @@ function StarryBackground() {
 
       {/* Star Navigation */}
       {onHomePage() && (
-        <div className="relative z-30 hidden sm:flex">
+        <div className="relative z-30 hidden md:flex">
           <AboutStar />
           <ProjectsStar />
         </div>
       )}
       {onAboutPage() && (
-        <div className="relative z-30 hidden sm:flex">
+        <div className="relative z-30 hidden md:flex">
           <HomeStar />
           <ProjectsStar />
         </div>
       )}
       {onProjectsPage() && (
-        <div className="relative z-30 hidden sm:flex">
+        <div className="relative z-30 hidden md:flex">
           <AboutStar />
           <HomeStar />
         </div>
