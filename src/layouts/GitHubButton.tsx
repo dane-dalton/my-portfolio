@@ -6,11 +6,11 @@ function GitHubButton() {
       <a
         href="https://github.com/dane-dalton"
         target="_blank"
-        className="absolute bottom-2 left-10 z-20 h-10 w-[9.5rem]"
+        className="absolute bottom-[10px] left-4 z-20 h-[54px] w-[56px] rounded-full sm:left-10 sm:w-[156px]"
       />
-      <div className="absolute bottom-2 left-10 z-0 flex items-center gap-2 bg-slate-900 text-white">
+      <div className="absolute bottom-2 left-4 z-0 flex animate-pulse items-center gap-2 rounded-full border border-slate-400 bg-slate-900 p-2 text-white shadow-[0_0_25px_0_rgba(0,0,0,0.1)] shadow-white sm:left-10">
         <VscGithub className="h-10 w-10" />
-        <p>dane-dalton</p>
+        <p className="hidden sm:block">dane-dalton</p>
       </div>
     </>
   );
