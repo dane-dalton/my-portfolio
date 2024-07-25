@@ -6,4 +6,6 @@ The main purpose of a portfolio is to show off your experience, projects, and sk
 
 While those are all important, one of the primary purposes for me was to have fun! I've spent countless hours experimenting with styles and pushing my design limits. In terms of complexity it may not be the most impressive web page out there, but it is ever evolving and I am excited to see where I can take it!
 
+What I've learned from trial and error desigining the UI/UX has helped me design the frontend for my current role at a much greater rate. This leaves me more time for tasks like optimization, production, and security.
+
 For inquiries, please contact me at danezdalton1@gmail.com
