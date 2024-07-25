@@ -82,7 +82,7 @@ function ProjectModal({ project, closeModal }: ProjectProps) {
               {/*footer*/}
               <div className="flex items-center justify-center rounded-b border-t border-solid border-slate-200 p-6">
                 <button
-                  className="background-transparent mb-1 mr-1 px-6 py-2 text-sm font-bold uppercase text-red-500 outline-none transition-all duration-75 ease-linear hover:rounded-lg hover:border-2 hover:border-red-500 hover:bg-red-200 hover:shadow-md hover:shadow-gray-400 focus:outline-none"
+                  className="mb-1 mr-1 rounded-lg px-6 py-2 text-sm font-bold uppercase text-red-500 transition-all duration-75 ease-linear hover:border-2 hover:border-red-500 hover:bg-red-200 hover:shadow-md hover:shadow-gray-400"
                   type="button"
                   onClick={() => closeModal()}
                 >
