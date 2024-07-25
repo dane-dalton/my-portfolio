@@ -39,7 +39,10 @@ function ProjectModal({ project, closeModal }: ProjectProps) {
   return (
     <>
       <motion.div
-        onClick={() => closeModal()}
+        onClick={(e) => {
+          e.stopPropagation();
+          closeModal();
+        }}
         className="absolute inset-0 z-40 flex items-center justify-center"
         initial={{ backgroundColor: "rgba(0,0,0,0)" }}
         animate={{ backgroundColor: "rgba(0,0,0,0.7)" }}
