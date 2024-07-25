@@ -42,7 +42,7 @@ function ProjectModal({ project, closeModal }: ProjectProps) {
         onClick={() => closeModal()}
         className="absolute inset-0 z-40 flex items-center justify-center"
         initial={{ backgroundColor: "rgba(0,0,0,0)" }}
-        animate={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+        animate={{ backgroundColor: "rgba(0,0,0,0.7)" }}
         exit={{ backgroundColor: "rgba(0,0,0,0)" }}
         transition={{ duration: 1 }}
       >

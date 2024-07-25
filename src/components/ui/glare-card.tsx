@@ -70,7 +70,7 @@ export const GlareCard = ({
       className="relative isolate transition-transform delay-[var(--delay)] duration-[var(--duration)] ease-[var(--easing)] will-change-transform [contain:layout_style] [perspective:600px]"
       ref={refElement}
       onPointerMove={(event) => {
-        const rotateFactor = 0.4;
+        const rotateFactor = 0.7;
         const rect = event.currentTarget.getBoundingClientRect();
         const position = {
           x: event.clientX - rect.left,
@@ -116,7 +116,7 @@ export const GlareCard = ({
         }
       }}
     >
-      <div className="grid h-full origin-center overflow-hidden rounded-[var(--radius)] border border-slate-800 transition-transform delay-[var(--delay)] duration-[var(--duration)] ease-[var(--easing)] will-change-transform [transform:rotateY(var(--r-x))_rotateX(var(--r-y))] hover:filter-none hover:[--duration:200ms] hover:[--easing:linear] hover:[--opacity:0.6]">
+      <div className="grid h-full origin-center overflow-hidden rounded-[var(--radius)] transition-transform delay-[var(--delay)] duration-[var(--duration)] ease-[var(--easing)] will-change-transform [transform:rotateY(var(--r-x))_rotateX(var(--r-y))] hover:filter-none hover:[--duration:200ms] hover:[--easing:linear] hover:[--opacity:0.6]">
         <div className="grid h-full w-full mix-blend-soft-light [clip-path:inset(0_0_0_0_round_var(--radius))] [grid-area:1/1]">
           <div className={cn("h-full w-full bg-slate-950", className)}>
             {children}
