@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
+import StarNavFade from "../../components/ui/StarNavFade";
 
 function HomeStar() {
   return (
-    <>
+    <StarNavFade>
       <div className="star-nav absolute left-[2.5rem] top-[26.5rem] z-20 h-[12px] w-[12px] animate-pulse rounded-full bg-slate-300" />
       <Link
         to={"/"}
@@ -11,7 +12,7 @@ function HomeStar() {
       <p className="stroke-nav absolute left-[1.3rem] top-[27.5rem] z-10 animate-pulse text-xl">
         Home
       </p>
-    </>
+    </StarNavFade>
   );
 }
 
