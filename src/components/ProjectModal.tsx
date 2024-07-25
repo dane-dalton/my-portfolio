@@ -2,11 +2,12 @@ import { motion } from "framer-motion";
 
 type ProjectProps = {
   project: {
+    id: string;
     title: string;
     desc: string;
     thumbnailImg: string;
     skills: string[];
-  };
+  } | null;
   closeModal: () => void;
 };
 
@@ -32,9 +33,9 @@ const dropIn = {
 };
 
 function ProjectModal({ project, closeModal }: ProjectProps) {
-  const title = project.title;
-  const desc = project.desc;
-  const skills = project.skills;
+  const title = project?.title;
+  const desc = project?.desc;
+  const skills = project?.skills;
 
   return (
     <>
@@ -51,13 +52,13 @@ function ProjectModal({ project, closeModal }: ProjectProps) {
       >
         <motion.div
           onClick={(e) => e.stopPropagation()}
-          className="absolute z-50 m-auto flex items-center justify-center overflow-y-auto overflow-x-hidden opacity-100 outline-none focus:outline-none"
+          className="absolute z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden opacity-100 outline-none focus:outline-none"
           variants={dropIn}
           initial="hidden"
           animate="visible"
           exit="exit"
         >
-          <div className="relative mx-auto my-6 w-auto max-w-md">
+          <div className="relative m-6 w-auto max-w-md">
             {/*content*/}
             <div className="project-border-shadow relative flex w-full flex-col rounded-lg border-2 border-white bg-slate-900 shadow-lg outline-none focus:outline-none">
               {/*header*/}
@@ -75,7 +76,7 @@ function ProjectModal({ project, closeModal }: ProjectProps) {
                 <div>
                   <h4 className="stroke-normal mb-2 text-3xl">Skills: </h4>
                   <ol className="grid grid-cols-3 place-items-center gap-1 text-center text-xl text-slate-200">
-                    {skills.map((skill, skillIdx) => (
+                    {skills?.map((skill, skillIdx) => (
                       <li key={skillIdx}>{skill}</li>
                     ))}
                   </ol>

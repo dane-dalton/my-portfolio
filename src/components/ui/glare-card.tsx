@@ -34,7 +34,7 @@ export const GlareCard = ({
     "--duration": "300ms",
     "--foil-size": "100%",
     "--opacity": "0",
-    "--radius": "8px",
+    "--radius": "12px",
     "--easing": "ease",
     "--transition": "var(--duration) var(--easing)",
   } as any;
@@ -66,10 +66,10 @@ export const GlareCard = ({
   return (
     <div
       style={containerStyle}
-      className="relative isolate transition-transform delay-[var(--delay)] duration-[var(--duration)] ease-[var(--easing)] will-change-transform [contain:layout_style] [perspective:600px]"
+      className="relative isolate transform-gpu transition-transform delay-[var(--delay)] duration-[var(--duration)] ease-[var(--easing)] will-change-transform [contain:layout_style] [perspective:600px]"
       ref={refElement}
       onPointerMove={(event) => {
-        const rotateFactor = 0.7;
+        const rotateFactor = 0.5;
         const rect = event.currentTarget.getBoundingClientRect();
         const position = {
           x: event.clientX - rect.left,
