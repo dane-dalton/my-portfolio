@@ -29,7 +29,14 @@ export const projects = [
     title: "My Portfolio",
     desc: "This project is the portfolio you are currently looking at! I had wanted to make a portfolio website for a while, and after going through the end-to-end development of the Mr. Math portal, I knew I had the skills to build it from scratch with React. I used this portfolio as an opportunity to learn TypeScript too, since it is something I have been wanting to learn for some time now. The theme is inspired by a photo I took from a bridge in Chattanooga at sunset.",
     thumbnailImg: portfolioImg,
-    skills: ["TypeScript", "React.js", "TailwindCSS", "Vite", "Vercel"],
+    skills: [
+      "TypeScript",
+      "React.js",
+      "TailwindCSS",
+      "Vite",
+      "Vercel",
+      "Framer Motion",
+    ],
   },
   {
     id: "knight",
@@ -50,7 +57,7 @@ export const projects = [
     title: "Mastermind",
     desc: "This is a game played inside the CLI. You have the option to play as the Coder or the Code Breaker. As the Code Breaker, you have 10 guesses to discover the Coders code that is randomly generated. You have color indicators that show how close you are to this code. As the Coder, you create a code of four colors, which the Code Breaker has to guess. I created an AI that utilizes Donald Knuth's strategy that uses a Minimax algorithm to beat the game every time in 5 guesses or less. Additionally, I learned about graph pruning to speed up the runtime of this program by a few minutes.",
     thumbnailImg: mastermindImg,
-    skills: ["Ruby", "Minimax Algorithm", "Pruning"],
+    skills: ["Ruby", "Trees", "Minimax Algorithm", "Pruning"],
   },
   {
     id: "lights",

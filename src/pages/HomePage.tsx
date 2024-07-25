@@ -19,7 +19,7 @@ function HomePage() {
           Hello, my name is
         </h1>
         <PageHeader header="Dane Dalton" />
-        <section className="mx-[2rem] mt-[1rem] flex h-1/2 flex-col items-center text-center text-[1.5rem] text-slate-200 xs:mx-[4rem] md:mx-[20rem] md:text-[2rem] xl:mx-[24rem] xl:text-[2.5rem]">
+        <section className="mx-[2rem] mt-[1rem] flex h-1/2 flex-col items-center text-center text-[1.5rem] text-slate-200 xs:mx-[4rem] md:mx-[14rem] md:text-[2rem] xl:mx-[24rem] xl:text-[2.5rem]">
           <TextGenerateEffect words={homeText} />
           <TextGenerateEffect words={homeTextMobile} className="sm:hidden" />
         </section>

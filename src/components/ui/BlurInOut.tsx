@@ -5,7 +5,6 @@ type Props = {
   className?: String;
 };
 
-//Need h-full but it pushes down sparkles background. Because relative???
 function BlurInOut({ children, className }: Props) {
   return (
     <motion.div
