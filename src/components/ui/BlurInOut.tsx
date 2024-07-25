@@ -8,7 +8,7 @@ type Props = {
 function BlurInOut({ children, className }: Props) {
   return (
     <motion.div
-      className={`absolute inset-2 z-20 ${className}`}
+      className={`absolute inset-0 z-20 ${className}`}
       initial={{ filter: "blur(2rem)" }}
       animate={{ filter: "blur(0)" }}
       exit={{ filter: "blur(2rem)" }}

@@ -11,7 +11,7 @@ export const projects = [
   {
     id: "portal",
     title: "E-Learning Portal",
-    desc: "A new portal for roughly one thousand students, parents, teachers, TAs, and admins. Features included are authorization/authentication, class schedules and rescheduling, worksheets made of problem sets, and an internal messaging system. This portal is what taught me React, building a product from start to production, and the confidence to come up with my own creative software solutions.",
+    desc: "A new portal for 1000+, parents, teachers, TAs, and admins. I was hired to update an outdated UI/UX and implement new features like scheduling and internal messaging. This portal is what taught me React, full life-cycle development from start to production, and the confidence to come up with my own creative software solutions.",
     thumbnailImg: portalImg,
     skills: [
       "React.js",
@@ -22,6 +22,7 @@ export const projects = [
       "Vite",
       "MathJax",
       "UI/UX",
+      "QA Design",
     ],
   },
   {
