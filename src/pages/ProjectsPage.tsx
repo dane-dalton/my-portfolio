@@ -29,7 +29,7 @@ function ProjectsPage() {
     <BlurInOut>
       <div className="absolute z-20 flex h-full w-full flex-col items-center">
         <PageHeader header="Projects" />
-        <section className="absolute top-1/3 mx-[2rem] my-auto mt-[1rem] flex h-full w-full items-center justify-center sm:mx-[10rem] md:mx-[18rem] lg:mx-[24rem]">
+        <section className="absolute bottom-0 top-1/4 mx-[2rem] mt-[1rem] flex h-screen w-full items-center justify-center sm:mx-[10rem] md:mx-[18rem] lg:mx-[24rem]">
           <InfiniteMovingCards
             projects={projects}
             speed="normal"
@@ -43,8 +43,8 @@ function ProjectsPage() {
           )}
         </AnimatePresence>
       </div>
-      <Highlight className="absolute bottom-4 left-0 right-0 mx-auto mt-2 w-[28rem] px-8 py-2 shadow-[0_0_30px_1px_rgba(255,255,255,0.9)]">
-        <span className="grid grid-cols-3 place-items-center gap-y-2 text-lg text-slate-700">
+      <Highlight className="absolute bottom-[6rem] left-0 right-0 mx-auto mt-2 w-[24rem] px-4 py-2 shadow-[0_0_30px_1px_rgba(255,255,255,0.9)] sm:bottom-4 md:w-[28rem] md:px-8">
+        <span className="grid grid-cols-3 place-items-center text-base text-slate-700 md:gap-y-2 md:text-lg">
           <h4 className="mr-2">Based out of:</h4>
           <div className="col-span-2 flex items-center gap-1">
             <p>{myLocation}</p>
