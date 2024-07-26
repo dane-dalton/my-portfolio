@@ -23,7 +23,7 @@ function AboutPage() {
           <a href={resumePDF} target="_blank">
             <button
               type="button"
-              className="project-border-shadow absolute bottom-0 left-[42%] mb-[3.5rem] rounded-lg border-2 bg-slate-900 p-2 text-slate-200 transition-all duration-150 ease-linear hover:bg-slate-200 hover:text-slate-800 sm:mb-4 sm:p-4 md:left-[46%]"
+              className="project-border-shadow absolute bottom-[6rem] left-0 right-0 mx-auto w-[8rem] rounded-lg border-2 bg-slate-900 p-2 text-slate-200 transition-all duration-150 ease-linear hover:bg-slate-200 hover:text-slate-800 sm:bottom-[3rem] sm:mb-4 sm:p-4"
             >
               Resume
             </button>

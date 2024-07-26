@@ -11,7 +11,7 @@ export const projects = [
   {
     id: "portal",
     title: "E-Learning Portal",
-    desc: "A new portal for 1000+, parents, teachers, TAs, and admins. I was hired to update an outdated UI/UX and implement new features like scheduling and internal messaging. This portal is what taught me React, full life-cycle development from start to production, and the confidence to come up with my own creative software solutions.",
+    desc: "A new portal for 1000+ parents, teachers, TAs, and admins. I was hired to update an outdated UI/UX and implement new features like scheduling and internal messaging. This portal is what taught me React, full life-cycle development from start to production, and the confidence to come up with my own creative software solutions.",
     thumbnailImg: portalImg,
     skills: [
       "React.js",
@@ -28,7 +28,7 @@ export const projects = [
   {
     id: "portfolio",
     title: "My Portfolio",
-    desc: "This project is the portfolio you are currently looking at! I had wanted to make a portfolio website for a while, and after going through the end-to-end development of the Mr. Math portal, I knew I had the skills to build it from scratch with React. I used this portfolio as an opportunity to learn TypeScript too, since it is something I have been wanting to learn for some time now. The theme is inspired by a photo I took from a bridge in Chattanooga at sunset.",
+    desc: "I had wanted to make a portfolio website for a while, and after going through the full life-cycle development of the Mr. Math Portal, I knew I had the skills to finally build it. I used this portfolio as an opportunity to learn TypeScript. The theme is inspired by a photo I took from a bridge in Chattanooga at sunset.",
     thumbnailImg: portfolioImg,
     skills: [
       "TypeScript",
@@ -42,7 +42,7 @@ export const projects = [
   {
     id: "knight",
     title: "Knight Travails",
-    desc: "Knight Travails is a chess inspired program that runs in the CLI. A knight is able to move to any square on a chess board, but what is the quickest path from A to B? To solve this problem, I created a graph with each possible move for a knight. With a Breadth First Search, the program stops at the first instance of the destination square, and reports the number of moves required, as well as the path taken.",
+    desc: "Find the quickest path for a Knight chess piece to get from square A to square B. Created a graph with each possible move for a knight. With a Breadth First Search, the program stops at the first instance of the destination square, and reports the number of moves required, as well as the path taken.",
     thumbnailImg: knightImg,
     skills: ["Ruby", "Graph Theory", "BFS"],
   },
@@ -56,7 +56,7 @@ export const projects = [
   {
     id: "mastermind",
     title: "Mastermind",
-    desc: "This is a game played inside the CLI. You have the option to play as the Coder or the Code Breaker. As the Code Breaker, you have 10 guesses to discover the Coders code that is randomly generated. You have color indicators that show how close you are to this code. As the Coder, you create a code of four colors, which the Code Breaker has to guess. I created an AI that utilizes Donald Knuth's strategy that uses a Minimax algorithm to beat the game every time in 5 guesses or less. Additionally, I learned about graph pruning to speed up the runtime of this program by a few minutes.",
+    desc: "Build the game of Mastermind. The computer utilizes Donald Knuth's solution to crack the code you create in 5 attempts or less every time. This solution involves a Minimax Algorithm. A tree is built and each possible outcome is assessed to pick a node that would eliminate the most possible options. I included Pruning to reduce the solve time by a few minutes.",
     thumbnailImg: mastermindImg,
     skills: ["Ruby", "Trees", "Minimax Algorithm", "Pruning"],
   },

@@ -52,32 +52,36 @@ function ProjectModal({ project, closeModal }: ProjectProps) {
       >
         <motion.div
           onClick={(e) => e.stopPropagation()}
-          className="absolute z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden opacity-100 outline-none focus:outline-none"
+          className="absolute z-50 flex items-center justify-center opacity-100 outline-none focus:outline-none"
           variants={dropIn}
           initial="hidden"
           animate="visible"
           exit="exit"
         >
-          <div className="relative m-6 w-auto max-w-md">
+          <div className="project-border-shadow relative w-[90%] rounded-lg border border-white sm:w-[75%] lg:w-[50%]">
             {/*content*/}
-            <div className="project-border-shadow relative flex w-full flex-col rounded-lg border-2 border-white bg-slate-900 shadow-lg outline-none focus:outline-none">
+            <div className="relative flex flex-col rounded-lg bg-slate-900 outline-none focus:outline-none">
               {/*header*/}
               <div className="flex items-center justify-center rounded-t border-b border-solid border-slate-200 p-5">
-                <h3 className="stroke-normal text-center text-5xl font-semibold">
+                <h3 className="text-center text-5xl font-semibold text-orange-400">
                   {title}
                 </h3>
               </div>
               {/*body*/}
-              <div className="mx-8 my-4">
-                <div className="mb-4 text-slate-300">
-                  <h4 className="stroke-normal mb-2 text-3xl">Description: </h4>
-                  <p className="text-md text-center">{desc}</p>
+              <div className="mx-8 mt-2 text-slate-300">
+                <div className="mb-2">
+                  <h4 className="my-2 text-3xl text-orange-500">
+                    Description:{" "}
+                  </h4>
+                  <p className="text-md text-center lg:text-lg">{desc}</p>
                 </div>
-                <div>
-                  <h4 className="stroke-normal mb-2 text-3xl">Skills: </h4>
-                  <ol className="grid grid-cols-3 place-items-center gap-1 text-center text-xl text-slate-200">
+                <div className="mb-4">
+                  <h4 className="my-2 text-3xl text-orange-500">Skills: </h4>
+                  <ol className="grid grid-cols-3 place-items-center gap-1 text-center text-xl text-purple-300">
                     {skills?.map((skill, skillIdx) => (
-                      <li key={skillIdx}>{skill}</li>
+                      <li key={skillIdx} className="list-disc">
+                        {skill}
+                      </li>
                     ))}
                   </ol>
                 </div>
