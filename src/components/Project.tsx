@@ -13,7 +13,7 @@ function Project({ project }: { project: ProjectProps }) {
         <GlareCard>
           <img
             src={thumbImg}
-            className="h-[6rem] w-[6rem] min-w-[6rem] rounded-[8px] object-center transition-all duration-150 ease-linear md:h-[8rem] md:w-[8rem] md:min-w-[8rem] lg:h-[10rem] lg:w-[10rem] lg:min-w-[10rem] xl:h-[15rem] xl:w-[15rem] xl:min-w-[15rem]"
+            className="h-[8rem] w-[8rem] min-w-[8rem] rounded-[8px] object-center transition-all duration-150 ease-linear md:h-[10rem] md:w-[10rem] md:min-w-[10rem] lg:h-[12rem] lg:w-[12rem] lg:min-w-[12rem] xl:h-[15rem] xl:w-[15rem] xl:min-w-[15rem]"
           />
         </GlareCard>
       </button>

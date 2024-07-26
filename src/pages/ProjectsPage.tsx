@@ -7,6 +7,9 @@ import { InfiniteMovingCards } from "../components/ui/infinite-moving-cards.tsx"
 import ProjectModal from "../components/ProjectModal.tsx";
 import { AnimatePresence } from "framer-motion";
 import { ProjectProps } from "../constants/projectTypes.ts";
+import { Highlight } from "../components/ui/highlight.tsx";
+import { myEmail, myLocation } from "../constants/pageText.ts";
+import { RocketLaunch } from "@phosphor-icons/react";
 
 function ProjectsPage() {
   const { setPageIdx } = usePageIdx();
@@ -40,6 +43,17 @@ function ProjectsPage() {
           )}
         </AnimatePresence>
       </div>
+      <Highlight className="absolute bottom-4 left-0 right-0 mx-auto mt-2 w-[28rem] px-8 py-2 shadow-[0_0_30px_1px_rgba(255,255,255,0.9)]">
+        <span className="grid grid-cols-3 place-items-center gap-y-2 text-lg text-slate-700">
+          <h4 className="mr-2">Based out of:</h4>
+          <div className="col-span-2 flex items-center gap-1">
+            <p>{myLocation}</p>
+            <RocketLaunch size={28} />
+          </div>
+          <h4 className="mr-2">Contact Me:</h4>
+          <p className="col-span-2">{myEmail}</p>
+        </span>
+      </Highlight>
     </BlurInOut>
   );
 }

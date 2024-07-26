@@ -15,11 +15,11 @@ function HomePage() {
   return (
     <BlurInOut>
       <div className="absolute z-20 flex h-full w-full flex-col items-center">
-        <h1 className="stroke-normal mt-[3rem] text-center text-xl lg:text-3xl">
+        <h1 className="stroke-normal mt-[2rem] text-center text-xl lg:text-3xl xl:mt-[3rem]">
           Hello, my name is
         </h1>
         <PageHeader header="Dane Dalton" />
-        <section className="mx-[2rem] mt-[1rem] flex h-1/2 flex-col items-center text-center text-[1.5rem] text-slate-200 xs:mx-[4rem] md:mx-[14rem] md:text-[2rem] xl:mx-[24rem] xl:text-[2.5rem]">
+        <section className="mx-[2rem] mt-[1rem] flex h-1/2 flex-col items-center text-center text-[1.5rem] text-slate-200 xs:mx-[4rem] md:mx-[14rem] md:mt-[2rem] md:text-[2rem] xl:mx-[24rem] xl:text-[2.5rem]">
           <TextGenerateEffect words={homeText} />
           <TextGenerateEffect words={homeTextMobile} className="sm:hidden" />
         </section>
