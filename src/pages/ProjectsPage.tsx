@@ -9,7 +9,7 @@ import { AnimatePresence } from "framer-motion";
 import { ProjectProps } from "../constants/projectTypes.ts";
 import { Highlight } from "../components/ui/highlight.tsx";
 import { myEmail, myLocation } from "../constants/pageText.ts";
-import { RocketLaunch } from "@phosphor-icons/react";
+import { Envelope, MapPin, RocketLaunch } from "@phosphor-icons/react";
 
 function ProjectsPage() {
   const { setPageIdx } = usePageIdx();
@@ -43,15 +43,20 @@ function ProjectsPage() {
           )}
         </AnimatePresence>
       </div>
-      <Highlight className="absolute bottom-[6rem] left-0 right-0 mx-auto mt-2 w-[24rem] px-4 py-2 shadow-[0_0_30px_1px_rgba(255,255,255,0.9)] sm:bottom-4 md:w-[28rem] md:px-8">
-        <span className="grid grid-cols-3 place-items-center text-base text-slate-700 md:gap-y-2 md:text-lg">
-          <h4 className="mr-2">Based out of:</h4>
-          <div className="col-span-2 flex items-center gap-1">
+      <Highlight className="absolute bottom-[6rem] left-0 right-0 mx-auto mt-2 w-[20rem] px-4 py-2 shadow-[0_0_30px_1px_rgba(255,255,255,0.9)] sm:bottom-4 md:w-[24rem] md:px-8">
+        <span className="flex w-full justify-center text-base text-slate-700 md:text-lg">
+          <MapPin size={28} />
+          <div className="flex items-center gap-1">
             <p>{myLocation}</p>
-            <RocketLaunch size={28} />
+            <RocketLaunch
+              size={28}
+              className="animate-bounce text-orange-600"
+            />
           </div>
-          <h4 className="mr-2">Contact Me:</h4>
-          <p className="col-span-2">{myEmail}</p>
+        </span>
+        <span className="flex w-full justify-center text-base text-slate-700 md:text-lg">
+          <Envelope size={28} />
+          <p>{myEmail}</p>
         </span>
       </Highlight>
     </BlurInOut>

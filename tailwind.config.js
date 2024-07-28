@@ -16,11 +16,20 @@ export default {
       animation: {
         scroll:
           "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
+        portalGlow: "portalGlow 0.75s alternate infinite",
       },
       keyframes: {
         scroll: {
           to: {
             transform: "translate(calc(-50% - 0.5rem))",
+          },
+        },
+        portalGlow: {
+          from: {
+            boxShadow: "0 0 30px 1px rgba(255, 255, 255, 0.9)",
+          },
+          to: {
+            boxShadow: "0 0 50px 4px rgba(255, 255, 255, 1)",
           },
         },
       },

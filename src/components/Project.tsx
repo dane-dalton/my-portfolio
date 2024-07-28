@@ -1,5 +1,6 @@
 import { GlareCard } from "./ui/glare-card";
 import { ProjectProps } from "../constants/projectTypes";
+import { classNames } from "../utils";
 
 function Project({ project }: { project: ProjectProps }) {
   const thumbImg = project.thumbnailImg;
@@ -8,7 +9,12 @@ function Project({ project }: { project: ProjectProps }) {
     <>
       <button
         type="button"
-        className="cursor-pointer rounded-3xl bg-[rgba(255,255,255,0.4)] shadow-[0_0_30px_1px_rgba(255,255,255,0.9)] transition-all duration-150 ease-linear"
+        className={classNames(
+          project.id === "portal"
+            ? "animate-portalGlow"
+            : "shadow-[0_0_30px_1px_rgba(255,255,255,0.9)]",
+          "cursor-pointer rounded-3xl bg-[rgba(255,255,255,0.4)] transition-all duration-150 ease-linear",
+        )}
       >
         <GlareCard>
           <img

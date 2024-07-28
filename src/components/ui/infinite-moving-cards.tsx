@@ -75,14 +75,14 @@ export const InfiniteMovingCards = ({
       <ul
         ref={scrollerRef}
         className={cn(
-          "flex w-max min-w-full shrink-0 flex-nowrap gap-[0.5rem] py-6 md:gap-[3rem]",
+          "flex w-max min-w-full shrink-0 flex-nowrap gap-[0.5rem] py-6 pr-[0.5rem] md:gap-[1rem] md:pr-[1rem] lg:gap-[2rem] lg:pr-[2rem]",
           start && "animate-scroll",
           pauseOnHover && "hover:[animation-play-state:paused]",
         )}
       >
         {projects.map((project) => (
           <li
-            className="max-w-full flex-shrink-0 rounded-2xl p-2 md:p-5"
+            className="max-w-full flex-shrink-0 rounded-2xl p-2 md:p-3"
             style={{
               background:
                 "linear-gradient(180deg, var(--slate-800), var(--slate-900)",
@@ -94,12 +94,15 @@ export const InfiniteMovingCards = ({
               console.log(projects);
             }}
           >
+            <h4 className="mb-4 w-full text-center text-base text-slate-200 md:text-xl">
+              {project.title}
+            </h4>
             <Project project={project} />
           </li>
         ))}
         {projects.map((project) => (
           <li
-            className="max-w-full flex-shrink-0 rounded-2xl p-2 md:p-5"
+            className="max-w-full flex-shrink-0 rounded-2xl p-2 md:p-3"
             style={{
               background:
                 "linear-gradient(180deg, var(--slate-800), var(--slate-900)",
@@ -111,6 +114,9 @@ export const InfiniteMovingCards = ({
               console.log(projects);
             }}
           >
+            <h4 className="mb-4 w-full text-center text-base text-slate-200 md:text-xl">
+              {project.title}
+            </h4>
             <Project project={project} />
           </li>
         ))}

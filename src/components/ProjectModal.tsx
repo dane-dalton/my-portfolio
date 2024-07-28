@@ -58,7 +58,7 @@ function ProjectModal({ project, closeModal }: ProjectProps) {
           animate="visible"
           exit="exit"
         >
-          <div className="project-border-shadow relative w-[90%] rounded-lg border border-white sm:w-[75%] lg:w-[50%]">
+          <div className="project-border-shadow relative w-[100%] rounded-lg border border-white sm:w-[75%] lg:w-[50%]">
             {/*content*/}
             <div className="relative flex flex-col rounded-lg bg-slate-900 outline-none focus:outline-none">
               {/*header*/}
@@ -68,7 +68,7 @@ function ProjectModal({ project, closeModal }: ProjectProps) {
                 </h3>
               </div>
               {/*body*/}
-              <div className="mx-8 mt-2 text-slate-300">
+              <div className="mx-2 mt-2 text-slate-300 md:mx-8">
                 <div className="mb-2">
                   <h4 className="my-2 text-3xl text-orange-500">
                     Description:{" "}
@@ -77,7 +77,7 @@ function ProjectModal({ project, closeModal }: ProjectProps) {
                 </div>
                 <div className="mb-4">
                   <h4 className="my-2 text-3xl text-orange-500">Skills: </h4>
-                  <ol className="grid grid-cols-3 place-items-center gap-1 text-center text-xl text-purple-300">
+                  <ol className="grid grid-cols-3 place-items-center gap-1 text-center text-base text-purple-300 sm:text-lg md:text-xl">
                     {skills?.map((skill, skillIdx) => (
                       <li key={skillIdx} className="list-disc">
                         {skill}
