@@ -11,7 +11,7 @@ export const projects = [
   {
     id: "portal",
     title: "E-Learning Portal",
-    desc: "A new portal for 1000+ parents, teachers, TAs, and admins. I was hired to update an outdated UI/UX and implement new features like scheduling and internal messaging. This portal is what taught me React, full life-cycle development from start to production, and the confidence to come up with my own creative software solutions.",
+    desc: "A new portal for 1000+ parents, teachers, TAs, and admins. I was hired to update an outdated UI/UX and implement new features like scheduling and internal messaging. This portal is what taught me React, full life-cycle development from start to production, and the confidence to come up with my own creative software solutions. I've been working on this project for the past 2 years, with the launch coming soon.",
     thumbnailImg: portalImg,
     skills: [
       "React.js",
