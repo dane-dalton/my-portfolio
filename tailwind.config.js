@@ -18,6 +18,7 @@ export default {
           "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
         portalGlow: "portalGlow 0.75s alternate infinite",
         rotateIcon: "rotateIcon 4s linear infinite",
+        bounceRight: "bounceRight 1s infinite",
       },
       keyframes: {
         scroll: {
@@ -39,6 +40,16 @@ export default {
           },
           to: {
             transform: "rotateY(var(--end-deg, 360deg))",
+          },
+        },
+        bounceRight: {
+          "0%, 100%": {
+            transform: "translateX(-25%)",
+            animationTimingFunction: "cubic-bezier(0.8, 0, 1, 1)",
+          },
+          "50%": {
+            transform: "translateX(0)",
+            animationTimingFunction: "cubic-bezier(0, 0, 0.2, 1)",
           },
         },
       },
