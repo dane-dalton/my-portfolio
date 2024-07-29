@@ -29,7 +29,7 @@ function ProjectsPage() {
     <BlurInOut>
       <div className="absolute z-20 flex h-full w-full flex-col items-center">
         <PageHeader header="Projects" />
-        <section className="absolute bottom-0 top-1/4 mx-[2rem] mt-[1rem] flex h-screen w-full items-center justify-center sm:mx-[10rem] md:mx-[18rem] lg:mx-[24rem]">
+        <section className="absolute bottom-0 top-1/4 mx-[2rem] flex h-screen w-full items-center justify-center sm:mx-[10rem] md:mx-[18rem] lg:mx-[24rem] xl:mt-[1rem]">
           <InfiniteMovingCards
             projects={projects}
             speed="normal"

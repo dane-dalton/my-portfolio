@@ -18,7 +18,7 @@ function HomePage() {
     <BlurInOut>
       <div className="absolute z-20 flex h-full w-full flex-col items-center">
         <header>
-          <h1 className="stroke-normal mt-[1rem] text-center text-xl lg:mt-[1.5rem] lg:text-3xl xl:mt-[3rem]">
+          <h1 className="stroke-normal -mb-4 mt-[1rem] text-center text-xl lg:mt-[1.25rem] lg:text-3xl xl:mb-0 xl:mt-[3rem]">
             Hello, my name is
           </h1>
           <PageHeader header="Dane Dalton" />
