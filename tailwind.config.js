@@ -17,6 +17,7 @@ export default {
         scroll:
           "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
         portalGlow: "portalGlow 0.75s alternate infinite",
+        rotateIcon: "rotateIcon 4s linear infinite",
       },
       keyframes: {
         scroll: {
@@ -30,6 +31,14 @@ export default {
           },
           to: {
             boxShadow: "0 0 50px 4px rgba(255, 255, 255, 1)",
+          },
+        },
+        rotateIcon: {
+          from: {
+            transform: "rotateY(var(--start-deg, 0deg))",
+          },
+          to: {
+            transform: "rotateY(var(--end-deg, 360deg))",
           },
         },
       },
