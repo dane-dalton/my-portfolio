@@ -1,5 +1,5 @@
 const homeText =
-  "This website is a portfolio for some of my projects, and showcase of my creative expression. Created with TypeScript, React, Tailwind, and Framer Motion.";
+  "This website is a portfolio for some of my projects, and showcase of my creative expression.";
 const homeTextMobile =
   "Please check it out on desktop too for a superior viewing experience!";
 
