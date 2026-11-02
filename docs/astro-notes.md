@@ -91,3 +91,36 @@ The canvas can't use Tailwind classes, so the script reads the tokens directly: 
 
 ### Dev server tip
 When a brand-new `.astro` file is added while `npm run dev` is running, Tailwind sometimes doesn't pick up its classes until the dev server restarts. That happened here with `/dev`: the production build was fine, the dev server was stale. If styles look missing in dev, restart the server before debugging.
+
+---
+
+## Phase 3: Single-page shell & navigation
+
+### Layouts and `<slot />`
+`src/layouts/BaseLayout.astro` is a **layout**: an ordinary Astro component that renders the whole `<html>` document (head, fonts, global CSS, starfield) and puts a `<slot />` where the page's content goes. A page uses it by wrapping its content:
+
+```astro
+<BaseLayout title="Page not found">
+  <main>…</main>
+</BaseLayout>
+```
+
+Everything between the tags is passed in and appears where `<slot />` sits. There's nothing special about the `layouts/` folder; it's a convention. Layouts are just components that happen to contain `<html>`. The home page, 404 page and `/dev` page now share one `<head>`, so Phase 9's SEO tags only need to be added in one place.
+
+### Composing a page from components
+`src/pages/index.astro` is now short: the layout, the header, and four section components from `src/components/sections/`. Each section is its own file, so Phases 4–7 each touch one file. `SectionHeading.astro` is shared by About, Experience and Contact, so the catalog label and heading style are defined once. It also has a `<slot />` for an optional subtitle.
+
+### Build-time values
+The footer's `{new Date().getFullYear()}` runs **at build time**, not in the browser, so the year is baked into the HTML when Vercel builds the site. It updates the next time the site is deployed after New Year's, not automatically at midnight. For a portfolio that's redeployed now and then, that's fine. A client script would be the only way to make it truly live.
+
+### Redirects
+`redirects` in `astro.config.mjs` sends the old React site's `/about` and `/projects` URLs to `/#about` and `/#experience`, so old links (LinkedIn, résumés you've sent) still work. With static output, Astro writes a tiny HTML page at each old path that redirects instantly. In Phase 7, once the Vercel adapter is added, these become real server redirects automatically, with no config change.
+
+### The header script and page navigation
+The `<script>` in `Header.astro` runs once when the page loads. That works because this is a single page and the browser never navigates away. If the site ever gets multiple pages with Astro's `<ClientRouter />` (view transitions between pages), scripts like this would need to listen for the `astro:page-load` event instead, because the page wouldn't fully reload on navigation.
+
+### Not Astro-specific, but worth knowing
+- **Smooth scrolling and the header offset are pure CSS:** `scroll-behavior: smooth` and `scroll-padding-top` on `html` in `global.css`. No JavaScript scrolls the page.
+- **Scroll-spy** uses an `IntersectionObserver` that watches a thin band across the middle of the screen (`rootMargin: "-45% 0px -50% 0px"`). Whichever section crosses that band becomes active.
+- **The active link** gets `aria-current="location"`, which tells screen readers "you are here." Tailwind styles it with the `aria-[current=location]:` variant, so the visual state and the accessible state can't drift apart.
+- **The URL** is updated with `history.replaceState`, so scrolling doesn't fill the back button's history.
