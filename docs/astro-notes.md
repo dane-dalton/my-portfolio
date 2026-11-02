@@ -50,3 +50,6 @@ Vercel detects Astro automatically, but your Vercel project was created with the
 - `eslint-plugin-astro` lets ESLint read `.astro` files, and its `jsx-a11y-recommended` config adds accessibility checks (for example, missing `alt` text).
 - `prettier-plugin-astro` teaches Prettier the `.astro` format.
 - `prettier-plugin-tailwindcss` sorts Tailwind classes. With Tailwind 4 it needs `tailwindStylesheet` pointing at `global.css`, since there's no JS config to read.
+
+### Dev toolbar
+When you run `npm run dev`, a small toolbar appears at the bottom of the page. It's Astro's **dev toolbar**: it can highlight islands, run a quick accessibility and performance audit, and show page settings. It only appears in development, never on the live site.
