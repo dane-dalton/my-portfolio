@@ -311,7 +311,7 @@ Phase 4 of docs/redesign-plan.md. Read CLAUDE.md and docs/content.md.
 Branch: `redesign/04-landing`.
 
 Build src/components/sections/Home.astro to match Combo 1:
-- Coordinates line (Huntsville, AL) + a small green "Open to inquiries" dot. Keep the
+- Coordinates line (city and coordinates from content.md) + a small green "Open to inquiries" dot. Keep the
   wording low-key; I'm not actively job hunting.
 - "Dane Dalton" in Instrument Serif with the sunset treatment from the combo.
 - One-line pitch from content.md.
