@@ -1,0 +1,9 @@
+---
+// Font-face rules for the three site fonts, configured in astro.config.mjs.
+// Preload only the faces visible on first paint: the display serif and body sans.
+import { Font } from "astro:assets";
+---
+
+<Font cssVariable="--font-display-src" preload />
+<Font cssVariable="--font-body-src" preload />
+<Font cssVariable="--font-mono-src" />

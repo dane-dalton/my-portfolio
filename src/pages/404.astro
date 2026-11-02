@@ -1,5 +1,6 @@
 ---
 // Shown for any URL that doesn't match a page. Vercel serves it with a 404 status.
+import Fonts from "../components/Fonts.astro";
 import "../styles/global.css";
 ---
 
@@ -7,16 +8,15 @@ import "../styles/global.css";
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <Fonts />
     <title>Page not found · Dane Dalton</title>
   </head>
-  <body
-    class="grid min-h-screen place-items-center bg-slate-950 px-4 text-slate-100"
-  >
+  <body class="grid min-h-screen place-items-center px-4">
     <main class="text-center">
-      <h1 class="text-4xl font-semibold tracking-tight">Page not found</h1>
-      <p class="mt-3 text-slate-400">This page drifted out of orbit.</p>
+      <h1 class="font-display text-display">Page not found</h1>
+      <p class="mt-3 text-muted">This page drifted out of orbit.</p>
       <a
-        class="mt-6 inline-block text-amber-300 underline underline-offset-4"
+        class="mt-6 inline-block text-amber underline underline-offset-4"
         href="/">Back home</a
       >
     </main>

@@ -1,5 +1,6 @@
 ---
 // Temporary placeholder while the redesign is built (Phase 1).
+import Fonts from "../components/Fonts.astro";
 import "../styles/global.css";
 ---
 
@@ -7,18 +8,17 @@ import "../styles/global.css";
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <Fonts />
     <title>Dane Dalton</title>
     <meta
       name="description"
       content="Dane Dalton, software developer. New site coming soon."
     />
   </head>
-  <body
-    class="grid min-h-screen place-items-center bg-slate-950 px-4 text-slate-100"
-  >
+  <body class="grid min-h-screen place-items-center px-4">
     <main class="text-center">
-      <h1 class="text-4xl font-semibold tracking-tight">Dane Dalton</h1>
-      <p class="mt-3 text-slate-400">Redesign in progress.</p>
+      <h1 class="font-display text-display">Dane Dalton</h1>
+      <p class="mt-3 text-muted">Redesign in progress.</p>
     </main>
   </body>
 </html>
