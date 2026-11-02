@@ -146,7 +146,7 @@ Shown as compact cards below the timeline. I'd feature 4. Code links come from y
 - **GitHub:** https://github.com/dane-dalton
 - **LinkedIn:** https://www.linkedin.com/in/dane-dalton/
 - **YouTube:** https://www.youtube.com/@danedalton
-- **Résumé:** `src/assets/resume.pdf`, updated Nov 2026 to match your current Google Doc, without your phone number.
+- **Résumé:** `public/Dane_Dalton_Resume.pdf` (served at `/Dane_Dalton_Resume.pdf`), updated Nov 2026 to match your current Google Doc, without your phone number.
 - **Not on the site:**
   - The TS/SCI clearance sponsorship line. It stays on the résumé only.
   - Your phone number, to avoid spam calls. The website's résumé PDF leaves it out too.

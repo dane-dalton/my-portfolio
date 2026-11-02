@@ -26,8 +26,9 @@ Dane Dalton's personal portfolio, danezdalton.com, being redesigned as a single-
 - `src/components/`: components. Page sections go in `src/components/sections/`.
 - `src/layouts/`: page layouts.
 - `src/styles/global.css`: Tailwind import and theme tokens.
-- `src/assets/`: images and the résumé PDF, processed by Astro.
-- `public/`: files served as-is (robots.txt, favicons).
+- `src/data/`: shared profile details and links (`site.ts`).
+- `src/assets/`: images, processed and optimized by Astro.
+- `public/`: files served as-is at a stable URL (résumé PDF, robots.txt, favicons).
 - `docs/`: plan, content, Astro notes, and `legacy/` (old site's text and styles, reference only, deleted in Phase 10).
 
 ## Design direction
