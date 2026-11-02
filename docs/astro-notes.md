@@ -53,3 +53,41 @@ Vercel detects Astro automatically, but your Vercel project was created with the
 
 ### Dev toolbar
 When you run `npm run dev`, a small toolbar appears at the bottom of the page. It's Astro's **dev toolbar**: it can highlight islands, run a quick accessibility and performance audit, and show page settings. It only appears in development, never on the live site.
+
+---
+
+## Phase 2: Design foundation
+
+### Fonts API (`fonts` in `astro.config.mjs`, `<Font />`)
+The three fonts are listed in `astro.config.mjs` under `fonts`, each with a provider (`fontProviders.google()`), the weights and styles we need, fallbacks, and a `cssVariable` name. At build time Astro downloads only those files, serves them from your own site (`/_astro/fonts/…`), and writes the `@font-face` rules.
+
+`src/components/Fonts.astro` renders `<Font cssVariable="…" />` from `astro:assets` for each font, inside `<head>`. That's what actually outputs the CSS. `preload` adds `<link rel="preload">` for the display and body fonts so they start downloading right away. The mono font isn't preloaded since it's only used for small labels.
+
+The fallbacks matter: because the last fallback is a generic family (`serif`, `sans-serif`, `monospace`), Astro generates a fallback font whose size and spacing match the real font. If you look at the computed `font-family` on the `<h1>`, you'll see `"Instrument Serif-… fallback: Times New Roman"`. That's the metric-matched fallback, which keeps text from jumping when the real font finishes loading.
+
+Options we didn't pick: a Google Fonts `<link>` (an extra connection to Google on every visit, plus a layout shift) or `@fontsource` npm packages (also self-hosted, but you write the fallbacks yourself).
+
+### Connecting the fonts to Tailwind
+In `global.css`, `@theme inline { --font-display: var(--font-display-src); … }` maps the Fonts API variables to Tailwind's `font-display`, `font-sans` and `font-mono` classes. `inline` tells Tailwind to use the variable's value directly instead of creating another variable that points at it.
+
+### Props (`Astro.props`)
+`Starfield.astro` and `BigDipper.astro` declare an `interface Props` in their frontmatter, and Astro type-checks every place they're used. For example, passing `links={{ Saturn: … }}` to `<BigDipper />` fails `astro check`. Default values come from destructuring: `const { density = 0.00025 } = Astro.props;`.
+
+### Template expressions
+`BigDipper.astro` builds the SVG with `{stars.map((star) => …)}`, just like JSX. It runs at build time, so the browser receives plain SVG with no JavaScript. `class:list={[…]}` is an Astro directive that joins classes and skips empty values, similar to the `clsx` / `cn()` helper in the old React site.
+
+### Scoped styles
+The `<style>` block at the bottom of `BigDipper.astro` is **scoped**: Astro adds a `data-astro-cid-…` attribute to the component's elements and rewrites the selectors, so `.label` there can't affect a `.label` anywhere else. Use `<style is:global>` if you ever need the opposite. We used scoped CSS here instead of Tailwind classes because SVG styling (`fill`, `stroke`, `stroke-dasharray`) and the hover/focus rules for groups of shapes read more clearly as CSS.
+
+### Client scripts
+The `<script>` in `Starfield.astro` is a **processed client script**: Astro type-checks it as TypeScript, bundles it, and loads it as a module in the browser. Two things to know:
+1. **It runs once per page**, even if the component appears several times. That's why it uses `querySelectorAll("canvas[data-starfield]")` and starts every canvas it finds instead of assuming there's one.
+2. **It can't see `Astro.props`**, because props exist only at build time. To pass `density` and `maxStars` to the browser, the component writes them into `data-*` attributes on the canvas, and the script reads `canvas.dataset`.
+
+The alternative is `<script define:vars={{ density }}>`, which injects props directly. But it turns the script into an un-bundled inline script that is repeated for every use of the component, so data attributes are the usual choice.
+
+### Reading theme tokens from a script
+The canvas can't use Tailwind classes, so the script reads the tokens directly: `getComputedStyle(document.documentElement).getPropertyValue("--color-ink")`. Tailwind 4 exposes every `@theme` value as a CSS variable, so the starfield and the CSS stay in sync.
+
+### Dev server tip
+When a brand-new `.astro` file is added while `npm run dev` is running, Tailwind sometimes doesn't pick up its classes until the dev server restarts. That happened here with `/dev`: the production build was fine, the dev server was stale. If styles look missing in dev, restart the server before debugging.
