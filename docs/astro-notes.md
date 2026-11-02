@@ -124,3 +124,27 @@ The `<script>` in `Header.astro` runs once when the page loads. That works becau
 - **Scroll-spy** uses an `IntersectionObserver` that watches a thin band across the middle of the screen (`rootMargin: "-45% 0px -50% 0px"`). Whichever section crosses that band becomes active.
 - **The active link** gets `aria-current="location"`, which tells screen readers "you are here." Tailwind styles it with the `aria-[current=location]:` variant, so the visual state and the accessible state can't drift apart.
 - **The URL** is updated with `history.replaceState`, so scrolling doesn't fill the back button's history.
+
+---
+
+## Phase 4: Landing section
+
+### Importing data into a component
+`src/data/site.ts` is a plain TypeScript module with your profile and links. `Home.astro` imports it in its frontmatter (`import { links, profile } from "../../data/site";`) and uses the values in the template with `{profile.pitch}`. This runs at build time, so the browser gets finished HTML and never downloads `site.ts`. About and Contact will import the same file, so your email or LinkedIn URL lives in exactly one place.
+
+For short, one-off data like this, a `.ts` file is simpler than a content collection. Collections (Phase 6) pay off when you have many entries of the same shape, like jobs or projects, that need schema validation.
+
+### `public/` vs `src/assets/` (the résumé)
+The résumé moved from `src/assets/resume.pdf` to `public/Dane_Dalton_Resume.pdf`.
+- **`src/assets/`**: Astro processes files when you import them. A PDF there would get a hashed name like `/_astro/resume.Bx3k9.pdf`, which changes every time the file changes. That's great for caching images, but bad for a link you paste into emails.
+- **`public/`**: files are copied untouched to the site root. The résumé is always at `danezdalton.com/Dane_Dalton_Resume.pdf`, so old links keep working after you update it.
+
+Images (your headshot in Phase 5) stay in `src/assets/` so Astro can resize and convert them.
+
+### Whitespace in templates
+`{profile.name.first}` followed by `<em>` on the next line rendered as "DaneDalton". Like JSX, Astro doesn't keep the line break between an expression and an element as a space. `{" "}` adds an explicit one. Watch for this whenever an expression sits next to an inline element.
+
+### Not Astro-specific
+- The **sunset glow** is a blurred `radial-gradient` positioned at the bottom of the section. Its colors come from the theme tokens through `color-mix(in srgb, var(--color-sun) 60%, transparent)`, which lets CSS fade a token color without hard-coding an `rgba()` value.
+- The section uses `isolate` to create its own stacking layer, so the glow can sit behind the text with `-z-10` without disappearing behind the page's starfield.
+- External links open in a new tab, and each one carries hidden "(opens in a new tab)" text for screen readers. The résumé link also says "PDF".
