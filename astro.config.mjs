@@ -6,6 +6,11 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   site: "https://www.danezdalton.com",
   output: "static",
+  // The old React site had separate pages; send those links to the matching section.
+  redirects: {
+    "/about": "/#about",
+    "/projects": "/#experience",
+  },
   fonts: [
     {
       name: "Instrument Serif",
