@@ -64,6 +64,12 @@
     color-scheme: dark;
   }
 
+  html {
+    scroll-behavior: smooth;
+    /* Keep anchored headings clear of the sticky header. */
+    scroll-padding-top: 4.5rem;
+  }
+
   body {
     @apply bg-night font-sans text-ink antialiased;
   }

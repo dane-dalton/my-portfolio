@@ -1,0 +1,128 @@
+---
+// Sticky site header: name and sky coordinates on the left, section nav on the right.
+// Highlights the section in view and collapses into a menu on small screens.
+const sections = [
+  { id: "home", label: "Home" },
+  { id: "about", label: "About" },
+  { id: "experience", label: "Experience" },
+  { id: "contact", label: "Contact" },
+];
+---
+
+<header
+  class="sticky top-0 z-40 border-b border-dashed border-line bg-night/75 backdrop-blur-md"
+>
+  <div
+    class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-gutter py-3 font-mono text-xs"
+  >
+    <a href="#home" class="tracking-wide whitespace-nowrap text-ink uppercase">
+      Dane Dalton
+      <span class="hidden text-muted sm:inline">· RA 11h 03m · Dec +61°</span>
+    </a>
+
+    <nav aria-label="Sections" class="group" data-site-nav>
+      <button
+        type="button"
+        class="inline-flex items-center gap-2 rounded-full border border-line px-3 py-1.5 text-ink uppercase md:hidden"
+        aria-expanded="false"
+        aria-controls="site-menu"
+        data-menu-button
+      >
+        <span aria-hidden="true" class="text-amber">✦</span>
+        Menu
+      </button>
+
+      <ul
+        id="site-menu"
+        class="absolute inset-x-0 top-full hidden flex-col border-b border-dashed border-line bg-night/95 px-gutter py-2 backdrop-blur-md group-data-open:flex md:static md:flex md:flex-row md:gap-1 md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none"
+      >
+        {
+          sections.map(({ id, label }) => (
+            <li>
+              <a
+                href={`#${id}`}
+                data-section-link={id}
+                class="flex items-center gap-2 rounded-full px-3 py-3 text-muted transition-colors hover:text-ink aria-[current=location]:bg-sun/12 aria-[current=location]:text-sun md:py-1.5"
+              >
+                <span aria-hidden="true" class="text-amber">
+                  ✦
+                </span>
+                {label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const nav = document.querySelector<HTMLElement>("[data-site-nav]");
+  const button = nav?.querySelector<HTMLButtonElement>("[data-menu-button]");
+  const links = [
+    ...document.querySelectorAll<HTMLAnchorElement>("[data-section-link]"),
+  ];
+
+  // Mobile menu (a disclosure: the button shows and hides the list).
+  if (nav && button) {
+    const desktop = matchMedia("(min-width: 48rem)");
+
+    const setOpen = (open: boolean, { returnFocus = false } = {}) => {
+      nav.toggleAttribute("data-open", open);
+      button.setAttribute("aria-expanded", String(open));
+      if (!open && returnFocus) button.focus();
+    };
+
+    button.addEventListener("click", () => {
+      setOpen(button.getAttribute("aria-expanded") !== "true");
+    });
+
+    nav.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && nav.hasAttribute("data-open")) {
+        setOpen(false, { returnFocus: true });
+      }
+    });
+
+    for (const link of links) {
+      link.addEventListener("click", () => setOpen(false));
+    }
+
+    document.addEventListener("click", (event) => {
+      if (!nav.contains(event.target as Node)) setOpen(false);
+    });
+
+    desktop.addEventListener("change", () => setOpen(false));
+  }
+
+  // Scroll-spy: mark the link for the section crossing the middle of the screen.
+  const sections = links
+    .map((link) => document.getElementById(link.dataset.sectionLink ?? ""))
+    .filter((section): section is HTMLElement => section !== null);
+
+  const setActive = (id: string) => {
+    for (const link of links) {
+      if (link.dataset.sectionLink === id) {
+        link.setAttribute("aria-current", "location");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    }
+    // Keep the address bar in step without adding history entries.
+    const url = id === "home" ? location.pathname : `#${id}`;
+    if (url !== location.pathname + location.hash) {
+      history.replaceState(null, "", url);
+    }
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) setActive(entry.target.id);
+      }
+    },
+    { rootMargin: "-45% 0px -50% 0px" },
+  );
+
+  for (const section of sections) observer.observe(section);
+</script>
