@@ -1,0 +1,38 @@
+---
+// Shared page shell: <head>, fonts, global styles and the starfield behind everything.
+import Fonts from "../components/Fonts.astro";
+import Starfield from "../components/Starfield.astro";
+import "../styles/global.css";
+
+interface Props {
+  /** Page title. Shown as "Title · Dane Dalton" unless it's already the site name. */
+  title?: string;
+  description?: string;
+  /** Keep the page out of search results (dev and preview pages). */
+  noindex?: boolean;
+}
+
+const siteName = "Dane Dalton";
+const {
+  title,
+  description = "Dane Dalton, software developer in Springfield, IL.",
+  noindex = false,
+} = Astro.props;
+const fullTitle =
+  title && title !== siteName ? `${title} · ${siteName}` : siteName;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <Fonts />
+  </head>
+  <body>
+    <Starfield />
+    <slot />
+  </body>
+</html>

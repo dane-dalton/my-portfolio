@@ -1,9 +1,7 @@
 ---
 // Temporary design-foundation preview (Phase 2). Delete in Phase 9.
 import BigDipper from "../components/BigDipper.astro";
-import Fonts from "../components/Fonts.astro";
-import Starfield from "../components/Starfield.astro";
-import "../styles/global.css";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
 const colors = [
   { token: "night", note: "Page background" },
@@ -20,126 +18,108 @@ const colors = [
 ];
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="noindex" />
-    <Fonts />
-    <title>Design foundation · Dane Dalton</title>
-  </head>
-  <body>
-    <Starfield />
-    <main class="mx-auto max-w-5xl space-y-16 px-gutter py-16">
-      <header class="space-y-2">
-        <p class="font-mono text-label text-amber uppercase">
-          Phase 2 · Design foundation
-        </p>
-        <h1 class="font-display text-heading">Tokens, type and sky</h1>
-        <p class="max-w-prose text-muted">
-          A temporary page for reviewing the theme before the real sections are
-          built.
-        </p>
-      </header>
+<BaseLayout title="Design foundation" noindex>
+  <main class="mx-auto max-w-5xl space-y-16 px-gutter py-16">
+    <header class="space-y-2">
+      <p class="font-mono text-label text-amber uppercase">
+        Phase 2 · Design foundation
+      </p>
+      <h1 class="font-display text-heading">Tokens, type and sky</h1>
+      <p class="max-w-prose text-muted">
+        A temporary page for reviewing the theme before the real sections are
+        built.
+      </p>
+    </header>
 
-      <section aria-labelledby="colors-heading" class="space-y-4">
-        <h2
-          id="colors-heading"
-          class="font-mono text-label text-muted uppercase"
+    <section aria-labelledby="colors-heading" class="space-y-4">
+      <h2 id="colors-heading" class="font-mono text-label text-muted uppercase">
+        Colors
+      </h2>
+      <ul class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        {
+          colors.map(({ token, note }) => (
+            <li class="space-y-2">
+              <div
+                class="h-16 rounded-card border border-line"
+                style={`background: var(--color-${token})`}
+              />
+              <p class="font-mono text-sm">{token}</p>
+              <p class="text-sm text-muted">{note}</p>
+            </li>
+          ))
+        }
+        <li class="space-y-2">
+          <div class="h-16 rounded-card bg-sunset"></div>
+          <p class="font-mono text-sm">sunset</p>
+          <p class="text-sm text-muted">bg-sunset / text-sunset</p>
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="type-heading" class="space-y-6">
+      <h2 id="type-heading" class="font-mono text-label text-muted uppercase">
+        Type
+      </h2>
+      <p class="font-display text-display">
+        Dane <em class="text-sunset pr-[0.08em]">Dalton</em>
+      </p>
+      <p class="font-display text-heading">Where I've worked</p>
+      <p class="max-w-prose text-lg font-light text-muted">
+        Software developer in Springfield, IL. I build driver and vehicle
+        services software for state DOTs, and full-stack web apps for small
+        businesses on the side.
+      </p>
+      <p class="max-w-prose">
+        Body text in Manrope. What I love most is problem solving, especially
+        problems that feel a little above me.
+      </p>
+      <p class="font-mono text-label text-amber uppercase">
+        UMa-02 · Experience · 2025 — Now
+      </p>
+      <div class="flex flex-wrap items-center gap-4 text-sm">
+        <a
+          href="#type-heading"
+          class="rounded-full bg-sunset px-4 py-2 font-semibold text-on-sunset"
+          >See my experience</a
         >
-          Colors
-        </h2>
-        <ul class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {
-            colors.map(({ token, note }) => (
-              <li class="space-y-2">
-                <div
-                  class="h-16 rounded-card border border-line"
-                  style={`background: var(--color-${token})`}
-                />
-                <p class="font-mono text-sm">{token}</p>
-                <p class="text-sm text-muted">{note}</p>
-              </li>
-            ))
-          }
-          <li class="space-y-2">
-            <div class="h-16 rounded-card bg-sunset"></div>
-            <p class="font-mono text-sm">sunset</p>
-            <p class="text-sm text-muted">bg-sunset / text-sunset</p>
-          </li>
-        </ul>
-      </section>
-
-      <section aria-labelledby="type-heading" class="space-y-6">
-        <h2 id="type-heading" class="font-mono text-label text-muted uppercase">
-          Type
-        </h2>
-        <p class="font-display text-display">
-          Dane <em class="text-sunset pr-[0.08em]">Dalton</em>
-        </p>
-        <p class="font-display text-heading">Where I've worked</p>
-        <p class="max-w-prose text-lg font-light text-muted">
-          Software developer in Springfield, IL. I build driver and vehicle
-          services software for state DOTs, and full-stack web apps for small
-          businesses on the side.
-        </p>
-        <p class="max-w-prose">
-          Body text in Manrope. What I love most is problem solving, especially
-          problems that feel a little above me.
-        </p>
-        <p class="font-mono text-label text-amber uppercase">
-          UMa-02 · Experience · 2025 — Now
-        </p>
-        <div class="flex flex-wrap items-center gap-4 text-sm">
-          <a
-            href="#type-heading"
-            class="rounded-full bg-sunset px-4 py-2 font-semibold text-on-sunset"
-            >See my experience</a
-          >
-          <a href="#type-heading" class="border-b border-line pb-0.5"
-            >Résumé ↗</a
-          >
-          <span class="inline-flex items-center gap-2 font-mono text-label">
-            <span
-              class="size-2 rounded-full bg-signal shadow-[0_0_8px_var(--color-signal)]"
-            ></span>
-            Open to inquiries
-          </span>
+        <a href="#type-heading" class="border-b border-line pb-0.5">Résumé ↗</a>
+        <span class="inline-flex items-center gap-2 font-mono text-label">
           <span
-            class="rounded-full border border-line px-2.5 py-0.5 font-mono text-label text-muted"
-            >TypeScript</span
-          >
-        </div>
-      </section>
-
-      <section aria-labelledby="dipper-heading" class="space-y-6">
-        <h2
-          id="dipper-heading"
-          class="font-mono text-label text-muted uppercase"
+            class="size-2 rounded-full bg-signal shadow-[0_0_8px_var(--color-signal)]"
+          ></span>
+          Open to inquiries
+        </span>
+        <span
+          class="rounded-full border border-line px-2.5 py-0.5 font-mono text-label text-muted"
+          >TypeScript</span
         >
-          Big Dipper
-        </h2>
-        <p class="max-w-prose text-sm text-muted">
-          Tab through the stars to check focus. The section links point at
-          headings on this page for now.
-        </p>
-        <div class="grid items-center gap-10 md:grid-cols-2">
-          <BigDipper
-            links={{
-              Megrez: { href: "#colors-heading", label: "Home" },
-              Dubhe: { href: "#type-heading", label: "About" },
-              Merak: { href: "#dipper-heading", label: "Experience" },
-              Alkaid: { href: "#colors-heading", label: "Contact" },
-            }}
-          />
-          <div class="max-w-48">
-            <BigDipper links={{}} />
-            <p class="mt-2 font-mono text-label text-muted">
-              Small, decorative (no links)
-            </p>
-          </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="dipper-heading" class="space-y-6">
+      <h2 id="dipper-heading" class="font-mono text-label text-muted uppercase">
+        Big Dipper
+      </h2>
+      <p class="max-w-prose text-sm text-muted">
+        Tab through the stars to check focus. The section links point at
+        headings on this page for now.
+      </p>
+      <div class="grid items-center gap-10 md:grid-cols-2">
+        <BigDipper
+          links={{
+            Megrez: { href: "#colors-heading", label: "Home" },
+            Dubhe: { href: "#type-heading", label: "About" },
+            Merak: { href: "#dipper-heading", label: "Experience" },
+            Alkaid: { href: "#colors-heading", label: "Contact" },
+          }}
+        />
+        <div class="max-w-48">
+          <BigDipper links={{}} />
+          <p class="mt-2 font-mono text-label text-muted">
+            Small, decorative (no links)
+          </p>
         </div>
-      </section>
-    </main>
-  </body>
-</html>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
