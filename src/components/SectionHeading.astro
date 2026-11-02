@@ -1,0 +1,18 @@
+---
+// Catalog label + heading used at the top of each section.
+interface Props {
+  /** Heading element id, referenced by the section's aria-labelledby. */
+  id: string;
+  /** Mono "catalog" label above the heading, e.g. "UMa-01 · About". */
+  label: string;
+  title: string;
+}
+
+const { id, label, title } = Astro.props;
+---
+
+<div class="space-y-1">
+  <p class="font-mono text-label text-amber uppercase">{label}</p>
+  <h2 {id} class="font-display text-heading text-balance">{title}</h2>
+  <slot />
+</div>
