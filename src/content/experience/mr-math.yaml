@@ -1,0 +1,19 @@
+company: Adventures with Mr. Math
+location: Remote
+order: 3
+roles:
+  - title: Senior Software Developer
+    start: "2025-05"
+    end: "2026-03"
+    bullets:
+      - Interviewed and onboarded front-end developers, ran code reviews, and approved pull requests.
+      - Deployed Docker images to AWS for staging and production.
+  - title: Software Developer
+    start: "2023-01"
+    end: "2025-05"
+    bullets:
+      - Built a React and Tailwind CSS e-learning portal for 3,000+ students, parents, TAs and teachers, including authentication, class scheduling, interactive worksheets, timed contests and messaging.
+      - Engineered a client-side caching system for the call-heavy worksheets, smoothing multi-problem work and reducing server load.
+      - Integrated with an ASP.NET Core REST API and wrote SQL for testing in SSMS and Azure Data Studio.
+      - Created and led the QA process with the lead QA engineer, and reviewed security vectors with a senior full-stack developer.
+tech: [React, Tailwind CSS, JavaScript, Docker, AWS, ASP.NET Core, SQL Server]

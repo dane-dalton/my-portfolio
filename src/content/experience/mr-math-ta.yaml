@@ -1,0 +1,11 @@
+company: Adventures with Mr. Math
+location: Remote
+order: 4
+roles:
+  - title: Director of Teaching Assistants
+    start: "2022-07"
+    end: "2025-02"
+    bullets:
+      - Managed, scheduled and interviewed 60+ teaching assistants, including staffing for national student competitions.
+      - Wrote a C# tool on the Google Sheets API that automates monthly TA hours, saving 4–6 hours a month and $7,000–$11,000 a year while reducing payment errors.
+tech: [C#, Google Sheets API]

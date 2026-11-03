@@ -1,0 +1,14 @@
+company: Fast Enterprises, LLC
+location: Springfield, IL
+order: 1
+roles:
+  - title: Implementation Consultant
+    start: "2025-04"
+    end: present
+    bullets:
+      - Build and customize driver and vehicle services software for state Departments of Transportation, including North Dakota DOT and the Illinois Secretary of State's new Driver Services project.
+      - Lead front-end and back-end development of NDDOT's driver pre-application, working with DOT directors and project managers from requirements through stakeholder demos.
+      - Modernized AAMVA API endpoints with REST, and built .NET integrations with the third-party vendors eDealer and VINtelligence.
+      - "Implemented North Dakota HB 1345: backfilled GVWR data on nearly 1 million titled trucks and updated registration weight and fee calculations for in-office and automated invoicing."
+      - Reduced database deadlocks through SQL optimization, set up Postman API testing for the team, and mentor new hires.
+tech: [C#, .NET, SQL, REST APIs, Postman]

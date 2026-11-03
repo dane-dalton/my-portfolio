@@ -1,0 +1,4 @@
+name: Mastermind solver
+summary: A computer player that cracks your code in five guesses or fewer using Knuth's minimax algorithm, with pruning to cut solve time.
+tech: [Ruby]
+repoUrl: https://github.com/dane-dalton/mastermind
