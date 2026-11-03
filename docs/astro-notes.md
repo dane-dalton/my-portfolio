@@ -148,3 +148,43 @@ Images (your headshot in Phase 5) stay in `src/assets/` so Astro can resize and 
 - The **sunset glow** is a blurred `radial-gradient` positioned at the bottom of the section. Its colors come from the theme tokens through `color-mix(in srgb, var(--color-sun) 60%, transparent)`, which lets CSS fade a token color without hard-coding an `rgba()` value.
 - The section uses `isolate` to create its own stacking layer, so the glow can sit behind the text with `-z-10` without disappearing behind the page's starfield.
 - External links open in a new tab, and each one carries hidden "(opens in a new tab)" text for screen readers. The résumé link also says "PDF".
+
+---
+
+## Phase 5: About section
+
+### Optimizing images with `astro:assets`
+`About.astro` imports the photo like a module: `import photo from "../../assets/photoOfMe.png";`. The import doesn't give you a URL string. It gives you an object with the image's path, width, height and format, which Astro reads at build time.
+
+`<Image src={photo} … />` (from `astro:assets`) uses that object to generate optimized files when the site builds:
+- **Format:** converts the 4.6 MB PNG to WebP, the default output format.
+- **`widths={[192, 240, 384, 480]}`:** writes one file per width. They came out at 8, 11, 27 and 41 kB.
+- **`sizes="(min-width: 768px) 240px, 192px"`:** tells the browser how wide the image will display, so it can pick the right file from the `srcset`. A phone downloads the 192 or 384 px version (the 384 is for sharp screens). A desktop downloads 240 or 480.
+- **`width={480}`:** sets the fallback `src` and the `width`/`height` attributes. Without it, Astro also made a full-resolution 572 kB copy as the fallback, which nobody needed.
+- **Layout shift:** Astro writes `width` and `height` on the `<img>` automatically, so the browser reserves the space before the image loads and the text doesn't jump.
+- **Lazy loading:** it adds `loading="lazy"` and `decoding="async"` by default. That suits images below the fold like this one. For an image at the very top of a page you'd pass `loading="eager"`.
+
+The other options: `<Picture />` outputs several formats (for example AVIF with a WebP fallback) inside a `<picture>` element, which helps for large photos. For a 240 px headshot, WebP alone is already tiny. A plain `<img src="/photo.png">` from `public/` would skip all optimization.
+
+In dev, the image URL looks like `/_image?href=…&w=480&f=webp`. That's the dev server converting images on demand. The real files are only written during `npm run build`.
+
+### Integrations (`astro-icon`)
+`astro add`-style **integrations** extend Astro itself. `astro-icon` is registered in `astro.config.mjs` under `integrations: [icon()]`. Its `<Icon name="simple-icons:react" />` component looks the icon up in the installed `@iconify-json/simple-icons` set **at build time** and inlines the SVG into the HTML. No icon font and no JavaScript, and only the 26 icons actually used are included.
+
+The other options: copying SVG files into `src/assets/icons` by hand (fine for a few icons, tedious for 26), or the React icon libraries from the old site, which would mean adding React.
+
+A few brands have no icon in Simple Icons (Azure, for example, was removed at Microsoft's request). The data file leaves `icon` out for those, and the component shows an amber ✦ instead.
+
+### Why `src/data/about.ts` and not a content collection
+The prompt left this choice open. About is **one** block of content with a custom shape (bio paragraphs plus skill groups with optional icons). A typed `.ts` file gives autocomplete and type-checking with no setup. Content collections shine for **many entries of the same shape** that you add over time, like jobs and projects, which is exactly what Phase 6 uses them for.
+
+### Nested slots
+`SectionHeading` has a `<slot />`, and About passes its subtitle into it:
+
+```astro
+<SectionHeading id="about-heading" label={about.label} title={about.title}>
+  <p>…subtitle…</p>
+</SectionHeading>
+```
+
+The heading component doesn't need to know a subtitle exists. Whatever is passed in appears under the title.
