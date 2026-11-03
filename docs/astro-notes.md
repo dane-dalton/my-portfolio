@@ -244,3 +244,48 @@ The plan had one flat `title`/`start`/`end` per job. Your Mr. Math entry has two
 
 ### Dev server tip (again)
 Adding `content.config.ts` restarted the dev server's content layer, and `astro-icon` lost its virtual module ("Cannot find module 'virtual:astro-icon'"). The production build was fine. Restarting `npm run dev` fixed it. After adding config-level files (integrations, content config), restart the dev server first if something looks broken.
+
+---
+
+## Phase 7: Contact form & footer
+
+### Actions
+`src/actions/index.ts` exports `server = { contact: defineAction({ … }) }`. An **action** is a typed function that runs on the server, and Astro turns it into an endpoint at `/_actions/contact` automatically.
+- `accept: "form"` means it takes `FormData`, so a plain `<form>` can submit to it.
+- `input: z.object({ … })` is a Zod schema, like the content collections in Phase 6. Astro validates the submission **before** the handler runs, and bad input comes back as field-by-field errors.
+- `handler` runs only on valid input. Throwing an `ActionError({ code: "INTERNAL_SERVER_ERROR", … })` sends a typed error to the caller.
+
+Two ways to call it, both used here:
+1. **From a client script** (`Contact.astro`): `const { error } = await actions.contact(new FormData(form))`. `isInputError(error)` tells field errors (`error.fields.email`) apart from server failures, so the script can put each message under the right input.
+2. **From a plain HTML form** with JavaScript off: `action={"/contact/sent" + actions.contact}` makes the form POST to `/contact/sent?_action=contact`. Astro runs the action and then renders that page, which reads the result with `Astro.getActionResult(actions.contact)`.
+
+Astro checks the `Origin` header on these POSTs. When I tested a submission claiming to come from another site, it got `403 Forbidden`. That's built-in CSRF protection we didn't have to write.
+
+### Adapters and on-demand rendering
+Actions need a server, so `astro.config.mjs` now has `adapter: vercel()`. The adapter translates Astro's output into Vercel's format (`.vercel/output/`).
+
+- **Prerendered (static), the default:** pages are built once into HTML, like before. `index.astro`, `404.astro` and `dev.astro` stay this way.
+- **On demand:** a page with `export const prerender = false` runs on every request. Only `src/pages/contact/sent.astro` does this, plus the `/_actions/*` endpoint.
+
+The build log shows the result: `mode: "server"` because a server exists, but every page still says `prerendering static routes`, and Vercel gets **one** function (`_render.func`) for the on-demand routes. Visitors still get static HTML. Only a form submission wakes the function.
+
+Why not make the home page on-demand so the form could use `Astro.getActionResult` directly? Then every visit would run a function: slower first byte, and wasted work for a page that never changes. A small separate result page keeps the home page static and still works without JavaScript.
+
+The adapter also turned the `redirects` from Phase 3 into real 301 redirects in Vercel's routing config, instead of HTML pages with a meta refresh.
+
+### `astro:env`: typed environment variables
+`env.schema` in `astro.config.mjs` declares each variable with `envField`:
+- `context: "server"` means it's only importable in server code (`astro:env/server`). Import it in a client script and the build fails.
+- `access: "secret"` means it's read from the real environment at runtime and never written into the built files. `access: "public"` (used for `CONTACT_FROM_EMAIL`) is inlined at build time, which is fine for a non-secret.
+- `optional: true` on the secrets lets the site build without them (on previews before you've added them, for example). The action checks for them and fails with a clear log line if they're missing.
+- `default` on `CONTACT_FROM_EMAIL` means you only set it to override, like using Resend's test sender while DNS verifies.
+
+Compare `import.meta.env.RESEND_API_KEY`, the older Vite way: it's untyped, easy to leak into the browser by mistake, and gives no error when the variable is missing.
+
+### `public/` vs `src/assets/` (revisited)
+The résumé link in Contact uses `links.resume` (`/Dane_Dalton_Resume.pdf`), served from `public/` so the URL never changes when you update the file (see Phase 4). Files in `public/` skip Astro's processing entirely. Anything in `src/assets/` gets a content-hashed name.
+
+### Not Astro-specific
+- **Spam traps:** `website` is a hidden input real people never see. `elapsed` is measured in the browser (`performance.now()`), so a visitor's wrong system clock can't trip it. Bots get a fake "success" so they don't learn what gave them away.
+- **The email** is plain text with `Reply-To` set to the visitor, so hitting Reply in Gmail answers them directly. Newlines are stripped from the name before it goes into the subject line.
+- **Accessibility:** every input has a `<label>`, errors are linked with `aria-describedby` and marked `aria-invalid`, and the status line is `role="status"` so screen readers announce "Sending…", success and errors.
