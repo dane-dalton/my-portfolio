@@ -1,5 +1,6 @@
 // @ts-check
-import { defineConfig, fontProviders } from "astro/config";
+import { defineConfig, envField, fontProviders } from "astro/config";
+import vercel from "@astrojs/vercel";
 import tailwindcss from "@tailwindcss/vite";
 import icon from "astro-icon";
 
@@ -7,6 +8,28 @@ import icon from "astro-icon";
 export default defineConfig({
   site: "https://www.danezdalton.com",
   output: "static",
+  // Pages stay prerendered; only routes that opt out (the contact action and
+  // its no-JavaScript result page) run as Vercel Functions.
+  adapter: vercel(),
+  env: {
+    schema: {
+      RESEND_API_KEY: envField.string({
+        context: "server",
+        access: "secret",
+        optional: true,
+      }),
+      CONTACT_TO_EMAIL: envField.string({
+        context: "server",
+        access: "secret",
+        optional: true,
+      }),
+      CONTACT_FROM_EMAIL: envField.string({
+        context: "server",
+        access: "public",
+        default: "Dane Dalton's portfolio <contact@danezdalton.com>",
+      }),
+    },
+  },
   // The old React site had separate pages; send those links to the matching section.
   redirects: {
     "/about": "/#about",
