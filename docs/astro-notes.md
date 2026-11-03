@@ -188,3 +188,59 @@ The prompt left this choice open. About is **one** block of content with a custo
 ```
 
 The heading component doesn't need to know a subtitle exists. Whatever is passed in appears under the title.
+
+---
+
+## Phase 6: Experience section
+
+### Content collections
+A **content collection** is a folder of entries that all share a shape. You declare each collection in `src/content.config.ts`:
+
+```ts
+const experience = defineCollection({
+  loader: glob({ pattern: "**/*.yaml", base: "./src/content/experience" }),
+  schema: z.object({ company: z.string(), roles: z.array(role).min(1), … }),
+});
+export const collections = { experience, projects };
+```
+
+- **The loader** says where entries come from. `glob()` reads every `.yaml` file in a folder, and each file name becomes the entry's `id` (`tpgm.yaml` → `tpgm`). Other loaders exist: `file()` reads one JSON or YAML file holding many entries, and custom loaders can pull from a CMS or an API. We chose one file per entry so adding a job or project is just adding one file.
+- **The schema** is written with Zod (`z`, imported from `astro/zod`). Every entry is checked against it when the site builds.
+- **YAML vs Markdown entries:** jobs and projects are pure data (lists of bullets, not long prose), so YAML fits. A collection of blog posts would use `.md` files, whose Markdown body Astro renders for you.
+
+### Schemas catch mistakes at build time
+To test this, I deleted the `title` from TPGM's role and ran the build. It stopped with:
+
+```
+[InvalidContentEntryDataError] experience → tpgm data does not match collection schema.
+  roles.0.title: Required
+  Location: src/content/experience/tpgm.yaml
+```
+
+That's the goal: a typo in a data file fails the build on Vercel with a message naming the file and field, instead of shipping a broken section.
+
+A few schema details worth knowing:
+- `z.coerce.date()` turns `"2025-04"` from YAML into a real `Date`. Plain `z.date()` would reject a string.
+- `end: z.union([z.literal("present"), z.coerce.date()])` accepts either the word `present` or a date. The literal comes first so `"present"` isn't fed to the date parser.
+- `featured: z.boolean().default(false)` means non-featured projects can leave the field out.
+- `z.url()` rejects malformed links.
+
+### Querying: `getCollection` and `getEntry`
+In `Experience.astro`'s frontmatter:
+- `await getCollection("experience")` returns every job as `{ id, data }`, where `data` is the validated, typed result of the schema. Collections don't guarantee an order, so we sort by the `order` field.
+- `await getCollection("projects", ({ data }) => data.featured)` passes a **filter**, so only the four featured projects come back.
+- `await getEntry(project.data.experience)` follows a **reference** (below) to the full job entry.
+
+These run at build time. The page ships as finished HTML, and the YAML files never reach the browser.
+
+### References between collections
+In the projects schema, `experience: reference("experience").optional()` means "this field holds the id of an entry in the experience collection." `ta-hours.yaml` says `experience: mr-math-ta`. If that id doesn't exist (a typo, or a deleted job), the build fails. That's how each project card can link to "The role at …" safely.
+
+### Generated types
+When Astro syncs content (on `npm run dev`, `npm run build`, or `npx astro sync`), it writes TypeScript types into `.astro/` from your schemas. That's why `data.roles[0].title` autocompletes in your editor, and why `astro check` flagged nothing: `role.end` is known to be `Date | "present"`, so the template has to handle both cases. Edit a schema and the types follow automatically.
+
+### Deviation from the plan's schema
+The plan had one flat `title`/`start`/`end` per job. Your Mr. Math entry has two titles (Software Developer, then Senior), and `content.md` asked to show them under one company. So each job has a `roles` array instead. A single-role job just has one item. I also added an `order` field because you chose to put Fast Enterprises first even though TPGM started later.
+
+### Dev server tip (again)
+Adding `content.config.ts` restarted the dev server's content layer, and `astro-icon` lost its virtual module ("Cannot find module 'virtual:astro-icon'"). The production build was fine. Restarting `npm run dev` fixed it. After adding config-level files (integrations, content config), restart the dev server first if something looks broken.
