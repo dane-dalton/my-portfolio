@@ -1,4 +1,5 @@
 ---
+import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import About from "../components/sections/About.astro";
 import Contact from "../components/sections/Contact.astro";
@@ -15,9 +16,5 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <Experience />
     <Contact />
   </main>
-  <footer
-    class="mx-auto max-w-6xl border-t border-dashed border-line px-gutter py-8 font-mono text-label text-muted"
-  >
-    © {new Date().getFullYear()} Dane Dalton
-  </footer>
+  <Footer />
 </BaseLayout>
