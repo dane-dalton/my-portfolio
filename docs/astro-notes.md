@@ -289,3 +289,8 @@ The résumé link in Contact uses `links.resume` (`/Dane_Dalton_Resume.pdf`), se
 - **Spam traps:** `website` is a hidden input real people never see. `elapsed` is measured in the browser (`performance.now()`), so a visitor's wrong system clock can't trip it. Bots get a fake "success" so they don't learn what gave them away.
 - **The email** is plain text with `Reply-To` set to the visitor, so hitting Reply in Gmail answers them directly. Newlines are stripped from the name before it goes into the subject line.
 - **Accessibility:** every input has a `<label>`, errors are linked with `aria-describedby` and marked `aria-invalid`, and the status line is `role="status"` so screen readers announce "Sending…", success and errors.
+
+### Debugging email delivery (what we learned)
+- **"Accepted" isn't "delivered."** The action only learns that Resend *accepted* the message. Resend's **Emails** page shows what happened next (Sent → Delivered, Bounced, Complained). The sending-only API key can't look this up, which is deliberate, so the dashboard is the place to check.
+- **Logs record the outcome, never the content.** The action logs `Contact form: sent (Resend id …)` or `dropped as spam (reason)`. Vercel's **Runtime Logs** for a deployment then tie a submission to the exact email in Resend.
+- **Test with a real Reply-To.** A local test with `Reply-To: test@example.com` showed as Delivered in Resend but never appeared in Gmail, while an identical message without it arrived. Gmail distrusts reply addresses on domains that can't receive mail. Real visitors enter real addresses, and the preview test with a real address arrived.
