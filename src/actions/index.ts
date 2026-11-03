@@ -47,7 +47,12 @@ export const server = {
         input.elapsed > 0 &&
         input.elapsed < MIN_FILL_MS;
       // Report success to bots so they learn nothing, but don't send anything.
-      if (filledHoneypot || tooFast) return { sent: true };
+      if (filledHoneypot || tooFast) {
+        console.info(
+          `Contact form: dropped as spam (${filledHoneypot ? "hidden field filled" : "sent too fast"}).`,
+        );
+        return { sent: true };
+      }
 
       if (!RESEND_API_KEY || !CONTACT_TO_EMAIL) {
         console.error(
@@ -62,7 +67,7 @@ export const server = {
       const name = singleLine(input.name);
       const company = input.company ? singleLine(input.company) : "";
       const resend = new Resend(RESEND_API_KEY);
-      const { error } = await resend.emails.send({
+      const { data, error } = await resend.emails.send({
         from: CONTACT_FROM_EMAIL,
         to: CONTACT_TO_EMAIL,
         replyTo: input.email,
@@ -87,6 +92,8 @@ export const server = {
         });
       }
 
+      // The Resend email id lets you look the message up in Resend's dashboard.
+      console.info(`Contact form: sent (Resend id ${data?.id ?? "unknown"}).`);
       return { sent: true };
     },
   }),
