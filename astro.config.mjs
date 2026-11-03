@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig, fontProviders } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
+import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
@@ -37,6 +38,7 @@ export default defineConfig({
       fallbacks: ["ui-monospace", "monospace"],
     },
   ],
+  integrations: [icon()],
   vite: {
     plugins: [tailwindcss()],
   },
