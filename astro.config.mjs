@@ -2,12 +2,15 @@
 import { defineConfig, envField, fontProviders } from "astro/config";
 import vercel from "@astrojs/vercel";
 import tailwindcss from "@tailwindcss/vite";
+import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://www.danezdalton.com",
   output: "static",
+  // One page, one stylesheet: inline it so first paint doesn't wait on a request.
+  build: { inlineStylesheets: "always" },
   // Pages stay prerendered; only routes that opt out (the contact action and
   // its no-JavaScript result page) run as Vercel Functions.
   adapter: vercel(),
@@ -61,7 +64,13 @@ export default defineConfig({
       fallbacks: ["ui-monospace", "monospace"],
     },
   ],
-  integrations: [icon()],
+  integrations: [
+    icon(),
+    // Only real pages: skip the form's result page and the 404.
+    sitemap({
+      filter: (page) => !page.includes("/contact/") && !page.includes("/404"),
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },
