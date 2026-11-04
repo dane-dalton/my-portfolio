@@ -338,3 +338,45 @@ Components opt in with data attributes: `data-intro` (landing sequence, in readi
 
 ### Shared utilities (Tailwind 4 `@utility`)
 Six slightly different copies of the link and button classes became three utilities in `global.css`: `link-line`, `link-inline` and `button-sunset`. A Tailwind 4 `@utility` behaves like a built-in class: it works with variants (`md:link-line`), merges with other classes, and its `&:hover` rules sit next to it.
+
+---
+
+## Phase 9: Quality pass
+
+### Integrations: `@astrojs/sitemap`
+Like `astro-icon`, the sitemap is an **integration** registered in `astro.config.mjs`. Integrations can hook into the build. This one runs after all pages are generated, lists them, and writes `sitemap-index.xml` plus `sitemap-0.xml`. It needs `site` (set back in Phase 1) to write absolute URLs. The `filter` option keeps out the contact form's result page and the 404, so the sitemap has exactly one URL: the home page. On-demand pages aren't included automatically anyway, because they don't exist at build time.
+
+### `Astro.url` and `Astro.site` for canonical URLs
+`BaseLayout.astro` builds absolute URLs with `new URL(Astro.url.pathname, Astro.site)`:
+- `Astro.url` is the URL of the page being rendered. At build time that's the page's path (`/`, `/404`).
+- `Astro.site` is the `site` value from the config (`https://www.danezdalton.com`).
+
+Combining them gives the canonical URL and the absolute `og:image` URL that LinkedIn, Slack and iMessage need. Relative URLs don't work in link previews.
+
+### Head tags from one layout, page-specific data through props
+Every head tag (canonical, Open Graph, Twitter, icons, manifest) lives in `BaseLayout.astro`, so the 404 page and the contact result page get them too. Page-specific things come in as props: the home page passes its own `description` and its JSON-LD `Person` object (`jsonLd={person}`).
+
+### `set:html` for JSON-LD
+The structured data is printed with:
+
+```astro
+<script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+```
+
+- `set:html` inserts a string as raw HTML instead of escaping it. That's needed here because JSON's quotes would otherwise be escaped. Only use it with content you control, never with visitor input.
+- `is:inline` stops Astro from treating this as a JavaScript module to bundle. It's data, not code.
+
+### `build.inlineStylesheets: "always"`
+By default Astro inlines only small stylesheets (`"auto"`, under about 4 KB) and links bigger ones as separate files. The site's CSS is 29 KB, and as a separate request it delayed the first paint by an estimated 600 ms on a throttled mobile connection. Since the site is one page, there's no cross-page caching to lose, so `"always"` puts the CSS straight into the HTML. Lighthouse's render-blocking warning went away.
+
+### Audit results (production build, Lighthouse 13.5, mobile with 4× CPU slowdown)
+
+| | Before | After |
+|---|---|---|
+| Performance | 97 | 97–98 (desktop 100) |
+| Accessibility | 100 (one warning) | 100 |
+| Best practices | 96 | 100 |
+| SEO | 100 | 100 |
+| Layout shift / blocking time | 0 / 0 ms | 0 / 0 ms |
+
+Run it yourself: `npm run build`, serve `.vercel/output/static`, and run `npx lighthouse <url>`. The remaining "cache lifetime" and "document latency" hints come from the plain local server, which doesn't compress or set cache headers. Vercel does both.
