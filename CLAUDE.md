@@ -35,7 +35,7 @@ Dane Dalton's personal portfolio, danezdalton.com, being redesigned as a single-
 ## Design direction
 
 "Star Chart at sunset," Combo 1 (Horizon Chart): https://claude.ai/artifact/Az236gnzYNvT8VKmE1rj9e
-Deep night-blue page, twinkling canvas starfield, a clickable Big Dipper whose stars link to the four sections, mono "catalog" labels, Instrument Serif display type. A sunset glow rises from the bottom of the landing section. Sunset gradient (orange to rose) on the last name, main button, active nav item and dates. Dark only.
+Deep night-blue page, twinkling canvas starfield, a clickable Big Dipper whose stars link to the four sections, mono "catalog" labels, Instrument Serif display type. A sunset glow rises from the bottom of the landing section. Sunset gradient (gold to rose, tilted so the gold sits at the lower left) on the last name, main button, active nav item and dates. Dark only.
 
 ## Conventions
 
