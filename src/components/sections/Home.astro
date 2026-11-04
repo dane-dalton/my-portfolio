@@ -1,0 +1,80 @@
+---
+// Landing section: name, pitch, calls to action and the Big Dipper section nav,
+// over a sunset glow rising from the bottom edge.
+import BigDipper from "../BigDipper.astro";
+import { links, profile } from "../../data/site";
+
+const external = [
+  { label: "GitHub", href: links.github },
+  { label: "LinkedIn", href: links.linkedin },
+];
+---
+
+<section
+  id="home"
+  aria-labelledby="home-heading"
+  class="relative isolate overflow-x-clip"
+>
+  <div
+    class="mx-auto grid max-w-6xl items-center gap-12 px-gutter pt-16 pb-36 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] md:pt-24 md:pb-44"
+  >
+    <div>
+      <p
+        class="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-label text-muted uppercase"
+        data-intro
+      >
+        <span>{profile.coordinates} — {profile.location}</span>
+        <span class="inline-flex items-center gap-2 text-ink normal-case">
+          <span
+            aria-hidden="true"
+            class="size-1.5 rounded-full bg-signal shadow-[0_0_8px_var(--color-signal)]"
+          ></span>
+          {profile.availability}
+        </span>
+      </p>
+
+      <p class="mt-8 text-lg font-light text-muted" data-intro>
+        {profile.greeting}
+      </p>
+      <h1 id="home-heading" class="mt-1 font-display text-display" data-intro>
+        {profile.name.first}{" "}
+        <em class="text-sunset pr-[0.08em]">{profile.name.last}</em>
+      </h1>
+
+      <p class="mt-5 max-w-[42ch] text-lg font-light text-muted" data-intro>
+        {profile.pitch}
+      </p>
+
+      <div
+        class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 text-sm"
+        data-intro
+      >
+        <a href="#experience" class="button-sunset px-5 py-2.5">
+          See my experience
+        </a>
+        <a href={links.resume} target="_blank" rel="noopener" class="link-line">
+          Résumé <span aria-hidden="true">↗</span>
+          <span class="sr-only">(PDF, opens in a new tab)</span>
+        </a>
+        {
+          external.map(({ label, href }) => (
+            <a href={href} target="_blank" rel="noopener" class="link-line">
+              {label} <span aria-hidden="true">↗</span>
+              <span class="sr-only">(opens in a new tab)</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+
+    <BigDipper animate class="mx-auto max-w-sm md:max-w-md" />
+  </div>
+
+  <!-- Sunset glow rising from the horizon at the bottom of the section. -->
+  <div
+    aria-hidden="true"
+    data-intro
+    class="pointer-events-none absolute inset-x-[-10%] bottom-[-2rem] -z-10 h-56 bg-[radial-gradient(55%_100%_at_50%_100%,color-mix(in_srgb,var(--color-sun)_60%,transparent),color-mix(in_srgb,var(--color-rose)_30%,transparent)_45%,color-mix(in_srgb,var(--color-plum)_15%,transparent)_65%,transparent_80%)] blur-md md:h-64"
+  >
+  </div>
+</section>

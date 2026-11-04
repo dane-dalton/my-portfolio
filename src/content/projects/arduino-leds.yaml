@@ -1,0 +1,3 @@
+name: Arduino LED strip
+summary: Custom twinkling light patterns for an RGB LED strip, from a self-directed semester project.
+tech: [Arduino, C++]

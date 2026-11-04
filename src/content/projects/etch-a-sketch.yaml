@@ -1,0 +1,5 @@
+name: Etch-A-Sketch
+summary: A browser sketchpad with adjustable grid size, color palette and opacity. It's the project that led to my first developer job.
+tech: [JavaScript, HTML, CSS]
+liveUrl: https://dane-dalton.github.io/etch-a-sketch/
+repoUrl: https://github.com/dane-dalton/etch-a-sketch

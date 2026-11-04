@@ -1,0 +1,41 @@
+---
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import About from "../components/sections/About.astro";
+import Contact from "../components/sections/Contact.astro";
+import Experience from "../components/sections/Experience.astro";
+import Home from "../components/sections/Home.astro";
+import { links, profile } from "../data/site";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const description =
+  "Dane Dalton is a software developer in Springfield, IL, building driver and vehicle services software for state DOTs and full-stack web apps for small businesses.";
+
+// Tells search engines who this site is about (schema.org Person).
+const person = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: `${profile.name.first} ${profile.name.last}`,
+  url: "https://www.danezdalton.com/",
+  image: "https://www.danezdalton.com/og.png",
+  jobTitle: "Software Developer",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Springfield",
+    addressRegion: "IL",
+    addressCountry: "US",
+  },
+  sameAs: [links.github, links.linkedin, links.youtube],
+};
+---
+
+<BaseLayout description={description} jsonLd={person}>
+  <Header />
+  <main id="main" tabindex="-1" class="outline-none">
+    <Home />
+    <About />
+    <Experience />
+    <Contact />
+  </main>
+  <Footer />
+</BaseLayout>

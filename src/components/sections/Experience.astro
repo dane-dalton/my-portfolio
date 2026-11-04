@@ -1,0 +1,178 @@
+---
+// Experience section: a timeline of roles and the featured projects,
+// both read from content collections in src/content/.
+import { getCollection, getEntry } from "astro:content";
+import SectionHeading from "../SectionHeading.astro";
+
+const year = (date: Date) => date.getUTCFullYear();
+const isoMonth = (date: Date) => date.toISOString().slice(0, 7);
+
+const jobs = (await getCollection("experience")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const featured = await Promise.all(
+  (await getCollection("projects", ({ data }) => data.featured))
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(async (project) => ({
+      ...project.data,
+      id: project.id,
+      job: project.data.experience
+        ? await getEntry(project.data.experience)
+        : undefined,
+    })),
+);
+---
+
+<section
+  id="experience"
+  aria-labelledby="experience-heading"
+  class="mx-auto max-w-6xl border-t border-dashed border-line px-gutter py-section"
+>
+  <SectionHeading
+    id="experience-heading"
+    label="UMa-02 · Experience"
+    title="Where I've worked"
+  >
+    <p class="mt-2 text-lg font-light text-muted">Roles, most recent first.</p>
+  </SectionHeading>
+
+  <div class="mt-12">
+    {
+      jobs.map(({ id, data }) => (
+        <article
+          data-reveal
+          id={`job-${id}`}
+          aria-labelledby={`job-${id}-company`}
+          class="scroll-mt-24 border-t border-dashed border-line py-8 first:border-t-0 first:pt-0"
+        >
+          <div class="grid gap-x-8 sm:grid-cols-[8rem_minmax(0,1fr)]">
+            <div class="sm:col-start-2">
+              <h3 id={`job-${id}-company`} class="font-display text-2xl">
+                {data.url ? (
+                  <a
+                    href={data.url}
+                    target="_blank"
+                    rel="noopener"
+                    class="transition-colors hover:text-amber"
+                  >
+                    {data.company}
+                    <span class="sr-only">(opens in a new tab)</span>
+                  </a>
+                ) : (
+                  data.company
+                )}
+              </h3>
+              <p class="mt-1 text-sm text-muted">{data.location}</p>
+            </div>
+          </div>
+
+          {data.roles.map((role) => (
+            <div class="mt-5 grid gap-x-8 gap-y-1 sm:grid-cols-[8rem_minmax(0,1fr)]">
+              <p class="font-mono text-label text-amber uppercase sm:pt-1">
+                <time datetime={isoMonth(role.start)}>{year(role.start)}</time>
+                {" — "}
+                {role.end === "present" ? (
+                  "Now"
+                ) : (
+                  <time datetime={isoMonth(role.end)}>{year(role.end)}</time>
+                )}
+              </p>
+              <div>
+                <h4 class="font-semibold">{role.title}</h4>
+                <ul class="mt-2 space-y-2 text-muted">
+                  {role.bullets.map((bullet) => (
+                    <li class="relative pl-5 leading-relaxed">
+                      <span
+                        aria-hidden="true"
+                        class="absolute top-0 left-0 text-xs leading-relaxed text-amber/80"
+                      >
+                        ✦
+                      </span>
+                      {bullet}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+
+          <div class="mt-4 grid gap-x-8 sm:grid-cols-[8rem_minmax(0,1fr)]">
+            <ul
+              class="flex flex-wrap gap-2 sm:col-start-2"
+              aria-label={`Technologies used at ${data.company}`}
+            >
+              {data.tech.map((item) => (
+                <li class="rounded-full border border-line px-2.5 py-0.5 font-mono text-label text-muted">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+
+  <div class="mt-16">
+    <h3 class="font-mono text-label text-muted uppercase" data-reveal>
+      Selected projects
+    </h3>
+    <ul class="mt-6 grid gap-5 sm:grid-cols-2">
+      {
+        featured.map((project) => (
+          <li
+            class="flex flex-col rounded-card border border-line bg-night/60 p-6 backdrop-blur-sm"
+            data-reveal
+          >
+            <h4 class="font-display text-2xl">{project.name}</h4>
+            <p class="mt-2 flex-1 leading-relaxed text-muted">
+              {project.summary}
+            </p>
+            <ul class="mt-4 flex flex-wrap gap-2" aria-label="Technologies">
+              {project.tech.map((item) => (
+                <li class="rounded-full border border-line px-2.5 py-0.5 font-mono text-label text-muted">
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <p class="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+              {project.liveUrl && (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener"
+                  class="link-line"
+                >
+                  Live site <span aria-hidden="true">↗</span>
+                  <span class="sr-only">
+                    for {project.name} (opens in a new tab)
+                  </span>
+                </a>
+              )}
+              {project.repoUrl && (
+                <a
+                  href={project.repoUrl}
+                  target="_blank"
+                  rel="noopener"
+                  class="link-line"
+                >
+                  Code <span aria-hidden="true">↗</span>
+                  <span class="sr-only">
+                    for {project.name} on GitHub (opens in a new tab)
+                  </span>
+                </a>
+              )}
+              {project.job && (
+                <a href={`#job-${project.job.id}`} class="link-line">
+                  The role at {project.job.data.company}
+                  <span aria-hidden="true">↑</span>
+                </a>
+              )}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

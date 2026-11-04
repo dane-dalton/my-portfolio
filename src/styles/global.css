@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+/*
+ * Theme tokens: "Star Chart at sunset", Combo 1 (Horizon Chart).
+ * Every color on the site comes from here. Tailwind turns each --color-* into
+ * utilities (bg-night, text-ink, border-line…) and each --font-* into font-*.
+ */
+@theme {
+  /* Night sky */
+  --color-night: #0a0d1f;
+  --color-night-glow: #1b1f45;
+
+  /* Text and rules */
+  --color-ink: #f1e9dc;
+  --color-muted: #a3a5c2;
+  --color-line: rgb(241 233 220 / 0.14);
+
+  /* Sunset */
+  --color-sun: #ff8a3d;
+  --color-rose: #ff4f7b;
+  --color-amber: #f4b860;
+  --color-plum: #5a1f5e;
+  --color-on-sunset: #1a0b14;
+
+  /* Status */
+  --color-signal: #4ade80;
+
+  /* Type scale */
+  --text-label: 0.6875rem;
+  --text-label--letter-spacing: 0.06em;
+  --text-display: clamp(3.25rem, 8vw, 6rem);
+  --text-display--line-height: 0.95;
+  --text-heading: clamp(1.625rem, 3.5vw, 2.25rem);
+  --text-heading--line-height: 1.1;
+
+  /* Radii */
+  --radius-card: 0.875rem;
+
+  /* Section spacing */
+  --spacing-section: clamp(4rem, 10vw, 7.5rem);
+  --spacing-gutter: clamp(1rem, 4vw, 1.75rem);
+}
+
+/* Fonts are loaded by the Astro Fonts API (astro.config.mjs) as --font-*-src. */
+@theme inline {
+  --font-display: var(--font-display-src);
+  --font-sans: var(--font-body-src);
+  --font-mono: var(--font-mono-src);
+}
+
+/* Orange-to-rose gradient for the main button and the last name. */
+@utility bg-sunset {
+  background-image: linear-gradient(90deg, var(--color-sun), var(--color-rose));
+}
+
+@utility text-sunset {
+  background-image: linear-gradient(90deg, var(--color-sun), var(--color-rose));
+  background-clip: text;
+  color: transparent;
+}
+
+/* Standalone links (Résumé ↗, GitHub ↗): a thin rule that turns amber. */
+@utility link-line {
+  border-bottom: 1px solid var(--color-line);
+  padding-bottom: 0.125rem;
+  transition:
+    border-color 150ms ease,
+    color 150ms ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--color-amber);
+    color: var(--color-ink);
+  }
+}
+
+/* Links inside running text. */
+@utility link-inline {
+  color: var(--color-ink);
+  text-decoration-line: underline;
+  text-decoration-color: color-mix(
+    in srgb,
+    var(--color-amber) 55%,
+    transparent
+  );
+  text-underline-offset: 4px;
+  transition: text-decoration-color 150ms ease;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration-color: var(--color-amber);
+  }
+}
+
+/* Primary call to action: the sunset pill. */
+@utility button-sunset {
+  display: inline-block;
+  border-radius: 9999px;
+  background-image: linear-gradient(90deg, var(--color-sun), var(--color-rose));
+  color: var(--color-on-sunset);
+  font-weight: 600;
+  transition:
+    filter 150ms ease,
+    transform 150ms ease;
+
+  &:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+/*
+ * Motion: elements marked data-intro, data-reveal or in an animated Big Dipper
+ * start hidden only while <html> has the "motion" class (see BaseLayout).
+ */
+.motion [data-intro],
+.motion [data-reveal],
+.motion [data-dipper-intro] [data-dipper-star],
+.motion [data-dipper-intro] [data-dipper-part] {
+  opacity: 0;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Keep anchored headings clear of the sticky header. */
+    scroll-padding-top: 4.5rem;
+  }
+
+  body {
+    @apply bg-night font-sans text-ink antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-amber);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}

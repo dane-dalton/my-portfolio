@@ -1,0 +1,4 @@
+name: Knight Travails
+summary: Finds the shortest path for a chess knight between any two squares with a breadth-first search.
+tech: [Ruby]
+repoUrl: https://github.com/dane-dalton/knight_travails

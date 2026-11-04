@@ -1,0 +1,208 @@
+---
+// The Big Dipper, with chosen stars acting as links to page sections.
+// Positions use the SVG's own coordinate box, so it scales with its container.
+
+type StarName =
+  "Alkaid" | "Mizar" | "Alioth" | "Megrez" | "Phecda" | "Merak" | "Dubhe";
+
+interface StarLink {
+  href: string;
+  label: string;
+}
+
+interface Props {
+  /** Which stars link where. Stars without a link are drawn plain. */
+  links?: Partial<Record<StarName, StarLink>>;
+  /** Light the stars up one by one when the page loads (landing section only). */
+  animate?: boolean;
+  class?: string;
+}
+
+const defaultLinks: Partial<Record<StarName, StarLink>> = {
+  Megrez: { href: "#home", label: "Home" },
+  Dubhe: { href: "#about", label: "About" },
+  Merak: { href: "#experience", label: "Experience" },
+  Alkaid: { href: "#contact", label: "Contact" },
+};
+
+const { links = defaultLinks, animate = false, class: className } = Astro.props;
+
+const stars: { name: StarName; x: number; y: number; r: number }[] = [
+  { name: "Alkaid", x: 20, y: 70, r: 2.4 },
+  { name: "Mizar", x: 70, y: 52, r: 2.4 },
+  { name: "Alioth", x: 108, y: 50, r: 2.8 },
+  { name: "Megrez", x: 150, y: 62, r: 2.2 },
+  { name: "Phecda", x: 160, y: 120, r: 2.4 },
+  { name: "Merak", x: 236, y: 128, r: 2.6 },
+  { name: "Dubhe", x: 246, y: 64, r: 3 },
+];
+
+// Handle, bowl, then back to Megrez to close the bowl.
+const path = [
+  "Alkaid",
+  "Mizar",
+  "Alioth",
+  "Megrez",
+  "Phecda",
+  "Merak",
+  "Dubhe",
+  "Megrez",
+]
+  .map((name) => stars.find((star) => star.name === name)!)
+  .map((star) => `${star.x},${star.y}`)
+  .join(" ");
+
+// Vertical offset of each star's label, so labels clear the constellation lines.
+const labelDy: Record<StarName, number> = {
+  Alkaid: 24,
+  Mizar: -12,
+  Alioth: -12,
+  Megrez: -16,
+  Phecda: 22,
+  Merak: 24,
+  Dubhe: -16,
+};
+
+const hasLinks = Object.keys(links).length > 0;
+---
+
+<svg
+  viewBox="0 0 320 220"
+  class:list={[
+    "big-dipper block h-auto w-full max-w-full overflow-visible",
+    className,
+  ]}
+  aria-label={hasLinks
+    ? "The Big Dipper. Its brightest stars link to sections of this page."
+    : undefined}
+  aria-hidden={hasLinks ? undefined : "true"}
+  data-dipper-intro={animate ? "" : undefined}
+>
+  <polyline
+    class="lines"
+    points={path}
+    aria-hidden="true"
+    data-dipper-part="lines"></polyline>
+
+  {
+    stars.map((star, index) => {
+      const link = links[star.name];
+      if (!link) {
+        return (
+          <circle
+            class="plain"
+            cx={star.x}
+            cy={star.y}
+            r={star.r}
+            aria-hidden="true"
+            data-dipper-star={index}
+          >
+            <title>{star.name}</title>
+          </circle>
+        );
+      }
+      return (
+        <a
+          href={link.href}
+          aria-label={link.label}
+          class="nav-star"
+          data-dipper-star={index}
+        >
+          <circle class="hit" cx={star.x} cy={star.y} r="16" />
+          <circle class="ring" cx={star.x} cy={star.y} r="9" />
+          <circle class="dot" cx={star.x} cy={star.y} r={star.r + 1.8} />
+          <text
+            class="label"
+            x={star.x}
+            y={star.y + labelDy[star.name]}
+            text-anchor="middle"
+          >
+            {link.label.toUpperCase()}
+          </text>
+        </a>
+      );
+    })
+  }
+
+  <text
+    class="caption"
+    x="160"
+    y="200"
+    text-anchor="middle"
+    aria-hidden="true"
+    data-dipper-part="caption"
+  >
+    URSA MAJOR · ASTERISM
+  </text>
+</svg>
+
+<style>
+  .lines {
+    fill: none;
+    stroke: var(--color-ink);
+    stroke-opacity: 0.35;
+    stroke-width: 1;
+    stroke-dasharray: 3 4;
+  }
+
+  .plain {
+    fill: var(--color-ink);
+  }
+
+  .hit {
+    fill: transparent;
+  }
+
+  .ring {
+    fill: none;
+    stroke: var(--color-amber);
+    stroke-width: 1;
+    opacity: 0;
+    transition: opacity 150ms ease;
+  }
+
+  .dot {
+    fill: var(--color-amber);
+    transform-box: fill-box;
+    transform-origin: center;
+    transition:
+      fill 150ms ease,
+      transform 150ms ease;
+  }
+
+  .label {
+    fill: var(--color-amber);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    transition: fill 150ms ease;
+  }
+
+  .caption {
+    fill: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.06em;
+  }
+
+  .nav-star {
+    cursor: pointer;
+    outline: none;
+  }
+
+  .nav-star:hover .ring,
+  .nav-star:focus-visible .ring {
+    opacity: 1;
+  }
+
+  .nav-star:hover .label,
+  .nav-star:focus-visible .label {
+    fill: var(--color-ink);
+  }
+
+  .nav-star:hover .dot,
+  .nav-star:focus-visible .dot {
+    fill: var(--color-ink);
+    transform: scale(1.3);
+  }
+</style>

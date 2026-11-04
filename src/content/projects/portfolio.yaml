@@ -1,0 +1,7 @@
+name: This portfolio
+summary: A space-themed portfolio rebuilt in Astro, with a hand-drawn starfield and a Big Dipper you can navigate by.
+tech: [Astro, TypeScript, Tailwind CSS, Vercel]
+liveUrl: https://www.danezdalton.com
+repoUrl: https://github.com/dane-dalton/my-portfolio
+featured: true
+order: 4

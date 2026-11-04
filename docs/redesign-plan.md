@@ -1,13 +1,15 @@
 # Portfolio Redesign Plan
 
-Status: **planning — no code changed yet.**
+Status: **decisions made — no code changed yet.** Next step: Prompt 0 (collect content).
 
 | Decision | Status |
 |---|---|
 | Theme | **Combo 1 · Horizon Chart** (Star Chart layout + Afterglow sunset glow): https://claude.ai/artifact/Az236gnzYNvT8VKmE1rj9e |
-| Stack | **Astro** + TypeScript + Tailwind 4, all other stack suggestions accepted |
-| Sections | Landing → About → Experience → Contact, single page, sticky header nav |
-| Open questions | Section 6 |
+| Stack | **Astro** + TypeScript + Tailwind 4, no React, all other stack suggestions accepted |
+| Sections | Landing → About → Experience (with Selected projects) → Contact, single page, sticky header nav |
+| Contact | Form handled by an Astro Action on Vercel, email sent with Resend (section 5.4) |
+| Hosting | Vercel; `staging` for previews, `main` for production |
+| Open questions | None — all answered in section 6 |
 
 First-round drafts (A, B, C), for reference: https://claude.ai/artifact/SSYyzESvxvgwREJJiqFWGK
 
@@ -56,7 +58,7 @@ First-round drafts (A, B, C), for reference: https://claude.ai/artifact/SSYyzESv
 ## 4. Theme: Star Chart at sunset
 
 Base: **Draft C (Star Chart)**: Instrument Serif display type, mono "catalog" labels, clickable Big Dipper whose stars are the four sections, coordinates in the header.
-Accent: **Draft B (Afterglow)**: orange → rose sunset gradient, horizon glow, "open to roles" dot, experience timeline.
+Accent: **Draft B (Afterglow)**: orange → rose sunset gradient, horizon glow, availability dot (worded "Open to inquiries"), experience timeline.
 
 Three combos to pick from (https://claude.ai/artifact/Az236gnzYNvT8VKmE1rj9e):
 
@@ -78,16 +80,18 @@ Mixing pieces is fine (e.g. "Combo 1's glow + Combo 3's ember stars").
 | Language | **TypeScript** (strict) | Astro has first-class TS support; keeps your TS skills in use. |
 | Styling | **Tailwind 4** via its Vite plugin | Theme tokens as CSS variables, which the starfield canvas can read too. |
 | Content | **Astro content collections** with schemas | Experience and projects as data files with type-checked fields. Adding a job = adding one file. |
-| Interactivity | Small TypeScript `<script>`s inside Astro components (starfield, scroll-spy, mobile menu, copy button) | None of these need React. Shipping less JS keeps the site fast. |
+| Interactivity | Small TypeScript `<script>`s inside Astro components (starfield, scroll-spy, mobile menu, contact form) | None of these need React. Shipping less JS keeps the site fast. |
 | Animation | **Motion** (vanilla JS API: `animate`, `inView`) | Same library as Framer Motion, without needing React. |
-| React | Optional, via `@astrojs/react`, only if a piece clearly benefits | See question 10. |
+| React | **Not used.** `npx astro add react` can add an island later if a piece ever needs it. | Decided in question 10. |
+| Contact form backend | **Astro Actions** + `@astrojs/vercel` adapter + **Resend** | See section 5.4. |
+| Node | Pinned to **24.x** in `package.json` `engines` | Matches your local Node and fixes the failing Vercel builds. |
 | Images | `astro:assets` `<Image />` | Automatic resizing and modern formats for your headshot and project images. |
 | SEO | `@astrojs/sitemap`, meta/OG tags in the layout | Better link previews and search indexing. |
 | Icons | One set (e.g. `astro-icon` with Simple Icons for tech logos + one UI icon set) | Replaces the two React icon libraries. |
 | Lint/format | ESLint (`eslint-plugin-astro`) + Prettier (`prettier-plugin-astro`, `prettier-plugin-tailwindcss`) | Keeps code consistent. |
-| Hosting | Vercel, static output | Vercel detects Astro automatically. No adapter needed for a static site. |
+| Hosting | Vercel. The page is prerendered static HTML; only the contact form's action runs as a Vercel Function. | Fast page plus a real backend for the form, on one host. |
 
-**Removed:** `react-router-dom`, `@tsparticles/*`, `framer-motion`, the Aceternity UI components, `@phosphor-icons/react`, `react-icons`, `clsx`/`tailwind-merge` (unless we keep React).
+**Removed:** `react`, `react-dom`, `react-router-dom`, `@tsparticles/*`, `framer-motion`, the Aceternity UI components, `@phosphor-icons/react`, `react-icons`, `clsx`, `tailwind-merge`.
 
 ### 5.2 Astro in one minute
 
@@ -104,24 +108,56 @@ Mixing pieces is fine (e.g. "Combo 1's glow + Combo 3's ember stars").
 - When Astro offers more than one way to do something, Claude names the options and why it chose one.
 - This is written into `CLAUDE.md` in Phase 1 so every session follows it.
 
+### 5.4 Contact form
+
+**How it works**
+
+1. The visitor fills in name, email and message (plus an optional "company" field).
+2. The form submits to an **Astro Action** (`src/actions/index.ts`). An action is a typed server function: Astro validates the input against a schema, runs your code on the server, and returns either data or field-level errors.
+3. Because the action needs a server, we add the **`@astrojs/vercel` adapter**. The page itself stays prerendered static HTML; only the action runs on demand as a Vercel Function.
+4. The action sends you an email through **Resend**, with the visitor's address as **Reply-To**, so you can answer by hitting Reply in Gmail.
+
+**Why this setup**
+
+- It's the Vercel-function approach you wanted, written the Astro way, and each piece is something you'll learn: Actions, adapters, on-demand rendering, and environment variables.
+- Resend has a simple API and a free tier far larger than a portfolio needs.
+- **No React needed.** The form is a plain HTML `<form>` that still works with JavaScript off, plus a small script for inline "Sending…", success and error states. A React island would add React (about 45–60 KB) to the page just for one form.
+
+**Best practices we'll follow**
+
+- **Validate on the server** with the action's schema (required fields, valid email, length limits). Browser validation is just for convenience.
+- **Spam protection, in layers:** a hidden honeypot field bots fill in, and a minimum time-to-submit check. If spam still gets through after launch, add Cloudflare Turnstile or Vercel BotID, both free, invisible to most visitors.
+- **Secrets stay out of the code:** the Resend API key lives in Vercel's environment variables (Production and Preview) and a local `.env` that git ignores. It's declared with Astro's `astro:env` schema so a missing key fails loudly.
+- **Send from your own domain** (e.g. `contact@danezdalton.com`) after verifying it in Resend, so messages don't land in spam.
+- **No database and no auto-reply** to the visitor. Auto-replies can be abused to send email to strangers.
+- **Clear feedback:** a success message that says you'll reply by email, and an error message that shows your email address as a fallback.
+
+**What you'll need to do yourself** (I'll walk you through it in Phase 7; I can't create accounts or handle your keys):
+
+1. Create a Resend account.
+2. Add your domain in Resend and copy the DNS records it gives you into wherever danezdalton.com's DNS is managed (Vercel or your registrar).
+3. Create a Resend API key and add it to Vercel as `RESEND_API_KEY` for Production and Preview, and to a local `.env` file.
+
 ## 6. Questions for you
 
-Answered: theme (Combo 1 · Horizon Chart), stack (Astro + all suggestions).
+All answered.
 
-1. ~~**Theme combo**~~ — answered: Combo 1.
-2. **Projects:** Your section list doesn't include Projects. Should we (a) drop projects, (b) put a compact "Selected projects" list inside Experience, or (c) add a fifth Projects section? I recommend **(b)**.
-3. **New content:** For each role: company, title, dates, location/remote, 2–4 bullet points (with numbers where possible), main technologies. Same for new projects (name, one-liner, tech, live/code links). A copy of your current résumé works too.
-4. **Contact section:** Email + copy button + social links only, or a real contact form? A form needs a service (Formspree, Web3Forms, or a Vercel function + Resend). I recommend **email + copy + links** to start.
-5. **Photo:** Keep your headshot? If so, where (landing or About)?
-6. **Bouldering / YouTube:** Keep in About? (I'd keep it.)
-7. **"Open to work" indicator:** Show it, or keep the job search quiet?
-8. **Light mode:** Dark only (fits the theme, recommended) or add a light toggle?
-9. **Hosting:** Still Vercel with danezdalton.com? Fine to deploy preview builds from a branch?
-10. **React:** Leave React out entirely (recommended; nothing on this page needs it), or keep one React island so the site still shows React on your skills list?
+1. **Theme combo:** Combo 1 · Horizon Chart.
+2. **Projects:** (b) a compact "Selected projects" list inside Experience.
+3. **New content:** you'll provide it in Prompt 0 (résumé text, new roles and projects).
+4. **Contact section:** a real contact form, backed by a Vercel function. Setup in section 5.4. Your email and social links stay visible beside it.
+5. **Photo:** keep the headshot, in About.
+6. **Bouldering / YouTube:** keep it in About.
+7. **Availability indicator:** keep it, worded **"Open to inquiries"**. Not "open to work" or "looking for roles", since you're not actively job hunting.
+8. **Light mode:** dark only.
+9. **Hosting:** Vercel, with `staging` previews.
+10. **React:** left out entirely. The contact form doesn't need it (section 5.4).
 
 ## 7. Phases
 
-Each phase is one focused session with Claude, on its own branch, ending with a working build you can look at and an "Astro notes" summary. Phases 4–7 can be reordered.
+Each phase is one focused session with Claude, on its own branch cut from `staging` and merged back into `staging` when done, ending with a working build you can look at and an "Astro notes" summary. Phases 4–7 can be reordered.
+
+**Branching:** `main` is production — Vercel deploys every push to it to danezdalton.com. All redesign work happens on `staging` (and short-lived phase branches off it). Pushing `staging` gives a Vercel preview URL, not a production deploy. `staging` merges into `main` only in Phase 10, after you approve the preview.
 
 | # | Phase | Output | Main Astro concepts |
 |---|---|---|---|
@@ -132,7 +168,7 @@ Each phase is one focused session with Claude, on its own branch, ending with a 
 | 4 | Landing section | Hero, CTAs, socials, Big Dipper nav | Composing components |
 | 5 | About section | Bio, photo, skills, bouldering | `astro:assets` `<Image />`, icons |
 | 6 | Experience section | Timeline + selected projects from data | Content collections, schemas, `getCollection` |
-| 7 | Contact section + footer | Email copy, links, résumé | Client scripts, `public/` vs `src/assets/` |
+| 7 | Contact form + footer | Working form that emails you, links, résumé | Actions, adapters, on-demand rendering, `astro:env`, `public/` vs `src/assets/` |
 | 8 | Motion & polish | Load sequence, reveals, hover states | Bundled npm packages in client scripts |
 | 9 | Quality pass | Accessibility, performance, SEO/OG, sitemap | Integrations (`@astrojs/sitemap`), `<head>` management |
 | 10 | Ship | Vercel preview, final review, PR | Deploying static Astro |
@@ -180,17 +216,18 @@ listed the TODOs at the end of your reply.
 
 ```
 We're starting the portfolio redesign in docs/redesign-plan.md. Read it, especially
-sections 4–6. My answers to section 6: [paste answers].
+sections 4–6 (my answers are in section 6).
 
 Phase 1 only: replace the Vite + React app with an Astro project. No design work yet.
 
-1. Create branch `redesign/01-astro`.
+1. From `staging`, create branch `redesign/01-astro`. Never commit to `main`.
 2. Remove the Vite app (index.html, vite.config.ts, src/main.tsx, React-only deps) but
    keep src/assets/ (images, résumé PDF) and move src/constants/ to docs/legacy/ so we
    can reuse the text. Don't delete anything else without listing it first.
 3. Set up current stable Astro with: TypeScript strict, Tailwind 4 via @tailwindcss/vite,
-   static output, `site` set to https://www.danezdalton.com. [Add @astrojs/react only if
-   my answer to question 10 was "keep React".]
+   static output, `site` set to https://www.danezdalton.com. No React. Pin Node with
+   `"engines": { "node": "24.x" }` in package.json (Vercel builds currently fail on an
+   outdated Node setting). Add `.env` to .gitignore.
 4. ESLint (flat config, eslint-plugin-astro, TypeScript) and Prettier
    (prettier-plugin-astro, prettier-plugin-tailwindcss). Keep my existing .prettierrc
    settings. Add `lint` and `format` scripts.
@@ -207,7 +244,8 @@ Phase 1 only: replace the Vite + React app with an Astro project. No design work
 
 Out of scope: design, sections, components.
 Done when: `npm run build`, `npm run lint` pass; `npm run dev` shows the placeholder in
-the browser; commits are small and logical; you end with Astro notes.
+the browser; after I push, the Vercel preview for this branch builds; commits are small
+and logical; you end with Astro notes.
 ```
 
 ### Prompt 2 — Design foundation
@@ -273,7 +311,8 @@ Phase 4 of docs/redesign-plan.md. Read CLAUDE.md and docs/content.md.
 Branch: `redesign/04-landing`.
 
 Build src/components/sections/Home.astro to match Combo 1:
-- Coordinates line (Huntsville, AL) [+ "Open to new roles" dot].
+- Coordinates line (city and coordinates from content.md) + a small green "Open to inquiries" dot. Keep the
+  wording low-key; I'm not actively job hunting.
 - "Dane Dalton" in Instrument Serif with the sunset treatment from the combo.
 - One-line pitch from content.md.
 - Primary CTA to #experience, secondary to my résumé PDF, GitHub / LinkedIn links with
@@ -295,8 +334,9 @@ Phase 5 of docs/redesign-plan.md. Read CLAUDE.md and docs/content.md.
 Branch: `redesign/05-about`.
 
 Build src/components/sections/About.astro: catalog label ("UMa-01 · ABOUT"), heading,
-one-line subtitle, bio from content.md (max ~70 characters per line), [headshot via
-astro:assets <Image /> with descriptive alt text], skills grouped by category with
+one-line subtitle, bio from content.md (max ~70 characters per line), my headshot
+(src/assets/photoOfMe.png) via astro:assets <Image /> with descriptive alt text and a
+treatment that fits the theme, skills grouped by category with
 icons, and the bouldering / YouTube note. Put the About text in a data file (a
 content collection or src/data/about.ts — explain which you picked and why).
 
@@ -318,8 +358,8 @@ Branch: `redesign/06-experience`.
    One file per entry under src/content/, populated from content.md.
 2. Build src/components/sections/Experience.astro: timeline per Combo 1, most recent
    first, dates formatted like "2021 — 2024" / "2024 — NOW", tech chips.
-3. [Selected projects: compact cards for featured projects below the timeline, with
-   tech chips and Live / Code links.]
+3. A "Selected projects" sub-section below the timeline: compact cards for featured
+   projects, with tech chips and Live / Code links.
 4. No horizontal scroll on mobile.
 
 Out of scope: animation.
@@ -328,24 +368,37 @@ Done when: build/lint pass; adding a role means adding one data file; a schema e
 Astro notes (cover collections, schemas, getCollection, and the generated types).
 ```
 
-### Prompt 7 — Contact section & footer
+### Prompt 7 — Contact form & footer
 
 ```
-Phase 7 of docs/redesign-plan.md. Read CLAUDE.md and docs/content.md.
-Branch: `redesign/07-contact`.
+Phase 7 of docs/redesign-plan.md. Read CLAUDE.md, docs/content.md, and section 5.4 of
+the plan. Branch: `redesign/07-contact`. First propose a plan and wait for my OK.
 
-Build src/components/sections/Contact.astro: catalog label, heading, one-line
-invitation, my email as large selectable text with a Copy button (navigator.clipboard,
-visible "Copied" state, fallback that selects the text), a mailto link, GitHub /
-LinkedIn / YouTube links, résumé button. [Or a contact form posting to (service), with
-validation, honeypot, success and error states.]
+1. Walk me through the Resend setup I need to do myself (account, domain DNS records,
+   API key, Vercel env vars for Production + Preview, local .env). Wait until I confirm
+   it's done before testing real sends.
+2. Add the @astrojs/vercel adapter. Keep the page prerendered; only the action runs
+   on demand. Declare RESEND_API_KEY (secret, server) and CONTACT_TO_EMAIL with the
+   astro:env schema.
+3. src/actions/index.ts: a `contact` action accepting form data. Schema: name (1–100),
+   email (valid), company (optional, ≤100), message (10–5000), a honeypot field that
+   must be empty, and a submitted-too-fast check. Send via the Resend SDK from
+   contact@danezdalton.com to CONTACT_TO_EMAIL, Reply-To set to the visitor, subject
+   "Portfolio inquiry from {name}". Never log message contents or the API key. Return
+   clear errors.
+4. src/components/sections/Contact.astro: catalog label, heading, one-line invitation,
+   the form (labels, autocomplete attributes, inline field errors, aria-live status),
+   working without JavaScript and enhanced with a small client script (Sending…,
+   success, error with my email as fallback). Beside it: my email as selectable text
+   with a Copy button, GitHub / LinkedIn / YouTube links, résumé button.
+5. Footer: © year computed at build time, one line on how the site was built (Astro +
+   Tailwind), link to the repo.
 
-Footer: © year computed at build time, one line on how the site was built (Astro +
-Tailwind), link to the repo.
-
-Out of scope: animation.
-Done when: build/lint pass, copy button works in the browser, screenshots at mobile and
-desktop, Astro notes (cover public/ vs src/assets/ for the résumé PDF).
+Out of scope: animation, extra spam services (Turnstile / BotID) unless spam shows up.
+Done when: build/lint pass; with JS on and off, a valid submission reaches my inbox on
+the Vercel preview and an invalid one shows field errors; the honeypot rejects bots;
+screenshots at mobile and desktop; Astro notes (cover Actions, adapters, on-demand vs
+prerendered routes, astro:env, and public/ vs src/assets/ for the résumé PDF).
 ```
 
 ### Prompt 8 — Motion & polish
@@ -393,7 +446,7 @@ anything you couldn't fix; Astro notes.
 
 ```
 Phase 10 of docs/redesign-plan.md. All phase branches are merged into
-`redesign/main` [or: list the branches].
+`staging` [or: list the branches].
 
 1. Update README.md for the new site (stack, how to run, how to add a job or project
    to the content collections).
@@ -411,5 +464,5 @@ Don't merge — I'll merge after reviewing the preview.
 
 - **Update the résumé PDF** at the same time so the site and résumé tell the same story.
 - **Write the content before the code.** Prompt 0 is the most valuable step.
-- **Keep the old site live** until the new one ships (it stays on `main`; the redesign lives on branches).
+- **Keep the old site live** until the new one ships (it stays on `main`; the redesign lives on `staging`).
 - **Optional later:** Vercel Analytics to see whether visitors reach Experience; a "Writing" section using an Astro Markdown collection, which is one of Astro's strengths.

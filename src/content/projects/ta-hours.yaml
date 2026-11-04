@@ -1,0 +1,7 @@
+name: TA hours automation
+summary: A C# tool that reads TA timesheets through the Google Sheets API and calculates monthly hours, saving 4–6 hours of work a month and $7,000–$11,000 a year.
+tech: [C#, Google Sheets API]
+repoUrl: https://github.com/dane-dalton/c-sharp-google-sheets
+experience: mr-math-ta
+featured: true
+order: 3

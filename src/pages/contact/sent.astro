@@ -1,0 +1,49 @@
+---
+// Result page for the contact form when JavaScript is off. The form posts here
+// with the `contact` action, so this page is rendered on demand, not prebuilt.
+import { actions, isInputError } from "astro:actions";
+import { contact } from "../../data/contact";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export const prerender = false;
+
+const result = Astro.getActionResult(actions.contact);
+if (!result) return Astro.redirect("/#contact");
+
+const fieldErrors =
+  result.error && isInputError(result.error)
+    ? Object.values(result.error.fields)
+        .flat()
+        .filter((message): message is string => Boolean(message))
+    : [];
+const succeeded = !result.error;
+---
+
+<BaseLayout title={succeeded ? "Message sent" : "Message not sent"} noindex>
+  <main class="grid min-h-screen place-items-center px-gutter py-section">
+    <div class="max-w-[52ch] space-y-5">
+      <p class="font-mono text-label text-amber uppercase">UMa-03 · Contact</p>
+      <h1 class="font-display text-heading">
+        {succeeded ? "Message sent" : "Your message wasn't sent"}
+      </h1>
+      {succeeded && <p class="text-lg text-muted">{contact.success}</p>}
+      {
+        fieldErrors.length > 0 && (
+          <ul class="list-disc space-y-1 pl-5 text-rose">
+            {fieldErrors.map((message) => (
+              <li>{message}</li>
+            ))}
+          </ul>
+        )
+      }
+      {
+        result.error && fieldErrors.length === 0 && (
+          <p class="text-lg text-muted">{contact.error}</p>
+        )
+      }
+      <a href="/#contact" class="inline-block link-line text-sm">
+        {succeeded ? "Back to the site" : "Go back and try again"}
+      </a>
+    </div>
+  </main>
+</BaseLayout>

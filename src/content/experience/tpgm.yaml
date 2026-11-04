@@ -1,0 +1,26 @@
+company: TPGM LLC
+location: Remote
+url: https://www.tpgmllc.com/
+order: 2
+roles:
+  - title: Freelance Web Developer
+    start: "2026-05"
+    end: present
+    bullets:
+      - Designed and built a full-stack real estate website and admin portal for a Chicago property management and leasing company, from the client's written spec and mockups to MVP launch.
+      - Built a housing search with combinable filters kept in the page address, so searches can be bookmarked and shared, plus an advanced search with live match counts and listing pages with photo galleries, floor plans and Google Maps.
+      - Secured the staff admin portal with Supabase Auth and PostgreSQL row-level security, with a full change history recorded by database triggers.
+      - Made accessibility a core requirement and verified it with Playwright tests across screen sizes. Shipped with feature flags and separate staging and production deploys on Vercel.
+      - Used Claude to turn the spec into detailed plans and to audit code and security, while directing the decisions and reviewing all output.
+tech:
+  [
+    React 19,
+    Vite,
+    Tailwind CSS v4,
+    Supabase,
+    PostgreSQL,
+    Vercel,
+    Google Maps,
+    Playwright,
+    Claude,
+  ]

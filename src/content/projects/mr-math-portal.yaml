@@ -1,0 +1,6 @@
+name: Mr. Math student portal
+summary: An e-learning portal for 3,000+ students, parents, TAs and teachers, with class scheduling, interactive worksheets, timed contests and messaging.
+tech: [React, Tailwind CSS, Docker, AWS]
+experience: mr-math
+featured: true
+order: 2
