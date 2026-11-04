@@ -294,3 +294,47 @@ The résumé link in Contact uses `links.resume` (`/Dane_Dalton_Resume.pdf`), se
 - **"Accepted" isn't "delivered."** The action only learns that Resend *accepted* the message. Resend's **Emails** page shows what happened next (Sent → Delivered, Bounced, Complained). The sending-only API key can't look this up, which is deliberate, so the dashboard is the place to check.
 - **Logs record the outcome, never the content.** The action logs `Contact form: sent (Resend id …)` or `dropped as spam (reason)`. Vercel's **Runtime Logs** for a deployment then tie a submission to the exact email in Resend.
 - **Test with a real Reply-To.** A local test with `Reply-To: test@example.com` showed as Delivered in Resend but never appeared in Gmail, while an identical message without it arrived. Gmail distrusts reply addresses on domains that can't receive mail. Real visitors enter real addresses, and the preview test with a real address arrived.
+
+---
+
+## Phase 8: Motion & polish
+
+### How client scripts bundle npm packages
+`src/scripts/motion.ts` is a plain TypeScript file that imports from the `motion` npm package. `BaseLayout.astro` pulls it in with:
+
+```astro
+<script>
+  import "../scripts/motion";
+</script>
+```
+
+Because that `<script>` has no attributes, Astro **processes** it. Vite follows the imports, includes only the parts of `motion` actually used (tree-shaking), minifies everything, and writes one hashed file to `/_astro/`. Every page that uses `BaseLayout` shares that file, and since the URL changes whenever the code changes, browsers can cache it forever.
+
+The size difference shows why the import path matters:
+
+| Import | Main script, gzipped |
+|---|---|
+| `animate` from `"motion"` (full engine) | 23.2 KB |
+| `animate` from `"motion/mini"` (uses the browser's Web Animations API) | 4.4 KB |
+
+`motion/mini` covers what we need (opacity and transform keyframes), so the site ships about a fifth of the JavaScript. `inView` and `stagger` still come from `"motion"`, but tree-shaking keeps only those two small functions.
+
+### Processed vs inline scripts
+The head of `BaseLayout.astro` also has a `<script is:inline>`. `is:inline` tells Astro: **don't** bundle this, put it in the HTML exactly as written. That matters here for two reasons:
+1. **Timing.** Processed scripts load as modules, which run *after* the page first paints. The inline script runs *before* paint, so the `motion` class is in place before anything appears and there's no flash of content that then disappears.
+2. **Size.** It's six lines with no imports, so bundling would add a network request for nothing.
+
+The trade-off: inline scripts aren't type-checked or minified, and they're repeated in every page's HTML, so keep them tiny.
+
+### Never hiding content by default
+The rule from the plan was "start from a visible state so nothing is ever stuck invisible." In practice:
+- The HTML itself hides nothing. Visitors with JavaScript turned off see the whole page.
+- The inline script adds `class="motion"` to `<html>` only when the visitor hasn't asked for reduced motion. Only then does CSS (`.motion [data-reveal] { opacity: 0 }`) hide the animated elements.
+- If `motion.ts` hasn't started within 2.5 seconds (slow network, blocked script), the inline script removes the class and everything appears.
+- Only `opacity` and `transform` are animated, and neither affects layout. The browser measured a layout-shift score of 0 through the load sequence and a full scroll.
+
+### Marking elements instead of selecting them
+Components opt in with data attributes: `data-intro` (landing sequence, in reading order), `data-reveal` (scroll reveal), and `<BigDipper animate />` (stars numbered with `data-dipper-star`). `motion.ts` never needs to know a section's structure, so adding a reveal to a new card is one attribute.
+
+### Shared utilities (Tailwind 4 `@utility`)
+Six slightly different copies of the link and button classes became three utilities in `global.css`: `link-line`, `link-inline` and `button-sunset`. A Tailwind 4 `@utility` behaves like a built-in class: it works with variants (`md:link-line`), merges with other classes, and its `&:hover` rules sit next to it.
