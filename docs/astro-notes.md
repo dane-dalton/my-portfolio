@@ -383,3 +383,70 @@ Run it yourself: `npm run build`, serve `.vercel/output/static`, and run `npx li
 
 ### Cross-browser check (Playwright 1.64, production build)
 Chromium, Firefox and WebKit (Safari's engine), each at 1280×800 and 375×812 and with `prefers-reduced-motion: reduce`. In every run: no console errors, nothing left hidden after scrolling, no horizontal scroll, all three fonts loaded, the gradient name rendered, and the Experience nav link landed the section just under the sticky header. With reduced motion, nothing was ever hidden. WebKit needed the system library `libavif16` to start.
+
+---
+
+## Recap: everything Astro in this site
+
+A one-page map of the Astro concepts used, where each one lives, and what to learn next.
+
+### How the site is put together
+| Concept | What it does here | Where |
+|---|---|---|
+| File-based routing | Each file in `src/pages/` is a URL: `/`, the 404 page, `/contact/sent` | `src/pages/` |
+| `.astro` components | Frontmatter runs at build time; the template becomes HTML with no JavaScript by default | every `.astro` file |
+| Props (`interface Props`) | Type-checked inputs, like `<BigDipper animate />` or `<BaseLayout title=… />` | `BigDipper.astro`, `BaseLayout.astro` |
+| Layouts and `<slot />` | One shell for `<head>`, fonts, starfield and SEO tags; pages fill the slot | `src/layouts/BaseLayout.astro` |
+| Scoped styles | `<style>` in a component only affects that component | `BigDipper.astro` |
+| Template expressions | `{items.map(…)}`, `class:list`, and `{" "}` for whitespace | sections |
+| `set:html` | Prints trusted raw HTML, used for the JSON-LD data | `BaseLayout.astro` |
+
+### Data and content
+| Concept | What it does here | Where |
+|---|---|---|
+| Plain TS data files | One-off content imported at build time | `src/data/` |
+| Content collections | Jobs and projects as YAML files, one per entry | `src/content/` |
+| Schemas (Zod via `astro/zod`) | Validate every entry; a typo fails the build and names the file | `src/content.config.ts` |
+| `getCollection` / `getEntry` | Query collections with filters; follow references | `Experience.astro` |
+| `reference()` | A project points at the job it came from; bad ids fail the build | `content.config.ts` |
+| Generated types (`.astro/`) | Autocomplete and type-checking for collection data | automatic |
+
+### Assets
+| Concept | What it does here | Where |
+|---|---|---|
+| `astro:assets` `<Image />` | 4.6 MB PNG headshot → 8–41 KB WebP at four widths, with no layout shift | `About.astro` |
+| Fonts API + `<Font />` | Self-hosted fonts with metric-matched fallbacks and preloading | `astro.config.mjs`, `Fonts.astro` |
+| `public/` vs `src/assets/` | Stable URLs (résumé, share image) vs. optimized, content-hashed files | both folders |
+
+### Interactivity
+| Concept | What it does here | Where |
+|---|---|---|
+| Processed `<script>` | TypeScript bundled with npm imports, run once per page | `Starfield.astro`, `Header.astro`, `motion.ts` |
+| `is:inline` script | Unbundled, runs before first paint (the motion failsafe) | `BaseLayout.astro` |
+| `data-*` attributes | Hand build-time values to browser scripts | `Starfield.astro`, motion hooks |
+| Tree-shaking | `motion/mini` keeps the main script at about 4 KB | `src/scripts/motion.ts` |
+
+### Server features
+| Concept | What it does here | Where |
+|---|---|---|
+| Actions | Typed, validated server function behind the contact form, with CSRF protection built in | `src/actions/index.ts` |
+| Adapter (`@astrojs/vercel`) | Turns on-demand routes into one Vercel Function | `astro.config.mjs` |
+| `prerender = false` | Only the no-JS result page renders per request | `src/pages/contact/sent.astro` |
+| `astro:env` | Typed, server-only secrets that fail loudly when missing | `astro.config.mjs`, `src/actions/` |
+| Redirects | Old `/about` and `/projects` URLs → 301 to the matching section | `astro.config.mjs` |
+
+### Build and tooling
+| Concept | What it does here | Where |
+|---|---|---|
+| Integrations | `astro-icon` (build-time SVG icons) and `@astrojs/sitemap` | `astro.config.mjs` |
+| `site` + `Astro.url` | Absolute canonical and share-image URLs | `BaseLayout.astro` |
+| `build.inlineStylesheets` | CSS inlined into the HTML, so first paint doesn't wait on a request | `astro.config.mjs` |
+| `astro check` | Type-checks `.astro` files; runs before every build | `package.json` |
+
+### What to learn next
+1. **View transitions (`<ClientRouter />`):** animated navigation between pages. Worth it if the site grows past one page, for example a case-study page per project. Scripts would then listen for `astro:page-load`.
+2. **Markdown/MDX collections:** a "Writing" section or TPGM case study, with `render()` turning entries into pages through dynamic routes (`src/pages/projects/[id].astro` + `getStaticPaths`).
+3. **Server islands (`server:defer`):** render one dynamic piece of an otherwise static page on demand, like a "currently reading" or live GitHub activity card.
+4. **Custom content loaders:** pull projects straight from the GitHub API at build time instead of YAML files.
+5. **Middleware and sessions:** per-request logic like rate-limiting the contact form, if spam ever gets through the honeypot.
+6. **`experimental` flags in the config reference:** where Astro previews features before they're stable.
