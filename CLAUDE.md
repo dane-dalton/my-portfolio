@@ -30,7 +30,7 @@ Dane Dalton's personal portfolio, danezdalton.com, being redesigned as a single-
 - `src/data/`: one-off content as typed TS (`site.ts`, `about.ts`).
 - `src/assets/`: images, processed and optimized by Astro.
 - `public/`: files served as-is at a stable URL: résumé PDF, `og.png` (1200×630 share image), favicons, `site.webmanifest`, `robots.txt`.
-- `docs/`: plan, content, Astro notes, and `legacy/` (old site's text and styles, reference only, deleted in Phase 10).
+- `docs/`: the redesign plan, site wording (`content.md`), Astro learning notes and README screenshots.
 
 ## Design direction
 
