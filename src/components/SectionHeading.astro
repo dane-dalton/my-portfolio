@@ -11,7 +11,7 @@ interface Props {
 const { id, label, title } = Astro.props;
 ---
 
-<div class="space-y-1">
+<div class="space-y-1" data-reveal>
   <p class="font-mono text-label text-amber uppercase">{label}</p>
   <h2 {id} class="font-display text-heading text-balance">{title}</h2>
   <slot />

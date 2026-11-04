@@ -22,9 +22,6 @@ const featured = await Promise.all(
         : undefined,
     })),
 );
-
-const linkClass =
-  "border-b border-line pb-0.5 transition-colors hover:border-amber";
 ---
 
 <section
@@ -44,6 +41,7 @@ const linkClass =
     {
       jobs.map(({ id, data }) => (
         <article
+          data-reveal
           id={`job-${id}`}
           aria-labelledby={`job-${id}-company`}
           class="scroll-mt-24 border-t border-dashed border-line py-8 first:border-t-0 first:pt-0"
@@ -117,11 +115,16 @@ const linkClass =
   </div>
 
   <div class="mt-16">
-    <h3 class="font-mono text-label text-muted uppercase">Selected projects</h3>
+    <h3 class="font-mono text-label text-muted uppercase" data-reveal>
+      Selected projects
+    </h3>
     <ul class="mt-6 grid gap-5 sm:grid-cols-2">
       {
         featured.map((project) => (
-          <li class="flex flex-col rounded-card border border-line bg-night/60 p-6 backdrop-blur-sm">
+          <li
+            class="flex flex-col rounded-card border border-line bg-night/60 p-6 backdrop-blur-sm"
+            data-reveal
+          >
             <h4 class="font-display text-2xl">{project.name}</h4>
             <p class="mt-2 flex-1 leading-relaxed text-muted">
               {project.summary}
@@ -139,7 +142,7 @@ const linkClass =
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener"
-                  class={linkClass}
+                  class="link-line"
                 >
                   Live site <span aria-hidden="true">↗</span>
                   <span class="sr-only">
@@ -152,7 +155,7 @@ const linkClass =
                   href={project.repoUrl}
                   target="_blank"
                   rel="noopener"
-                  class={linkClass}
+                  class="link-line"
                 >
                   Code <span aria-hidden="true">↗</span>
                   <span class="sr-only">
@@ -161,7 +164,7 @@ const linkClass =
                 </a>
               )}
               {project.job && (
-                <a href={`#job-${project.job.id}`} class={linkClass}>
+                <a href={`#job-${project.job.id}`} class="link-line">
                   The role at {project.job.data.company}
                   <span aria-hidden="true">↑</span>
                 </a>

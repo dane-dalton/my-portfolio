@@ -8,7 +8,7 @@ Dane Dalton's personal portfolio, danezdalton.com, being redesigned as a single-
 - Tailwind CSS 4 via `@tailwindcss/vite`, styles in `src/styles/global.css`
 - Content collections for experience and projects (from Phase 6)
 - Small client `<script>`s inside `.astro` components for interactivity. **No React** unless a piece clearly needs it.
-- Motion's vanilla JS API for animation (from Phase 8)
+- Motion for animation: `animate` from `motion/mini` plus `inView`/`stagger`, in `src/scripts/motion.ts`. Mark elements with `data-intro` (landing sequence) or `data-reveal` (scroll reveal).
 - Contact form: Astro Action + `@astrojs/vercel` adapter + Resend (Phase 7)
 - Hosted on Vercel. Node 24 (`engines` in package.json).
 
@@ -41,6 +41,8 @@ Deep night-blue page, twinkling canvas starfield, a clickable Big Dipper whose s
 
 - TypeScript strict. No `any`.
 - Style with Tailwind. Every color comes from a theme token; no hard-coded colors in components.
+- Use the shared utilities in `global.css` for links and the main button: `link-line` (standalone links), `link-inline` (links in running text), `button-sunset`.
+- Animate only `opacity` and `transform`, and never hide content in markup; hiding happens only under the `motion` class with its failsafe (see `BaseLayout.astro`).
 - Prefer `.astro` components and small client scripts over framework islands.
 - Content lives in data files or content collections, not hard-coded in markup.
 - Accessible by default: semantic landmarks, visible focus, keyboard support, alt text, `prefers-reduced-motion`.

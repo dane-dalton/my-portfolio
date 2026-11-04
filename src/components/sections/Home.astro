@@ -21,6 +21,7 @@ const external = [
     <div>
       <p
         class="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-label text-muted uppercase"
+        data-intro
       >
         <span>{profile.coordinates} — {profile.location}</span>
         <span class="inline-flex items-center gap-2 text-ink normal-case">
@@ -32,40 +33,32 @@ const external = [
         </span>
       </p>
 
-      <p class="mt-8 text-lg font-light text-muted">{profile.greeting}</p>
-      <h1 id="home-heading" class="mt-1 font-display text-display">
+      <p class="mt-8 text-lg font-light text-muted" data-intro>
+        {profile.greeting}
+      </p>
+      <h1 id="home-heading" class="mt-1 font-display text-display" data-intro>
         {profile.name.first}{" "}
         <em class="text-sunset pr-[0.08em]">{profile.name.last}</em>
       </h1>
 
-      <p class="mt-5 max-w-[42ch] text-lg font-light text-muted">
+      <p class="mt-5 max-w-[42ch] text-lg font-light text-muted" data-intro>
         {profile.pitch}
       </p>
 
-      <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 text-sm">
-        <a
-          href="#experience"
-          class="rounded-full bg-sunset px-5 py-2.5 font-semibold text-on-sunset transition-[filter] hover:brightness-110"
-        >
+      <div
+        class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4 text-sm"
+        data-intro
+      >
+        <a href="#experience" class="button-sunset px-5 py-2.5">
           See my experience
         </a>
-        <a
-          href={links.resume}
-          target="_blank"
-          rel="noopener"
-          class="border-b border-line pb-0.5 transition-colors hover:border-amber"
-        >
+        <a href={links.resume} target="_blank" rel="noopener" class="link-line">
           Résumé <span aria-hidden="true">↗</span>
           <span class="sr-only">(PDF, opens in a new tab)</span>
         </a>
         {
           external.map(({ label, href }) => (
-            <a
-              href={href}
-              target="_blank"
-              rel="noopener"
-              class="border-b border-line pb-0.5 transition-colors hover:border-amber"
-            >
+            <a href={href} target="_blank" rel="noopener" class="link-line">
               {label} <span aria-hidden="true">↗</span>
               <span class="sr-only">(opens in a new tab)</span>
             </a>
@@ -74,12 +67,13 @@ const external = [
       </div>
     </div>
 
-    <BigDipper class="mx-auto max-w-sm md:max-w-md" />
+    <BigDipper animate class="mx-auto max-w-sm md:max-w-md" />
   </div>
 
   <!-- Sunset glow rising from the horizon at the bottom of the section. -->
   <div
     aria-hidden="true"
+    data-intro
     class="pointer-events-none absolute inset-x-[-10%] bottom-[-2rem] -z-10 h-56 bg-[radial-gradient(55%_100%_at_50%_100%,color-mix(in_srgb,var(--color-sun)_60%,transparent),color-mix(in_srgb,var(--color-rose)_30%,transparent)_45%,color-mix(in_srgb,var(--color-plum)_15%,transparent)_65%,transparent_80%)] blur-md md:h-64"
   >
   </div>

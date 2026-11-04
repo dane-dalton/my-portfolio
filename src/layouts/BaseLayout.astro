@@ -30,9 +30,26 @@ const fullTitle =
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
     <Fonts />
+    <!--
+      Runs before first paint. Only when motion is allowed does it mark the page so
+      animated elements start hidden; if the animation script hasn't started within
+      2.5 seconds, it unhides everything so nothing can stay invisible.
+    -->
+    <script is:inline>
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        const root = document.documentElement;
+        root.classList.add("motion");
+        setTimeout(() => {
+          if (!("motionReady" in root.dataset)) root.classList.remove("motion");
+        }, 2500);
+      }
+    </script>
   </head>
   <body>
     <Starfield />
     <slot />
+    <script>
+      import "../scripts/motion";
+    </script>
   </body>
 </html>

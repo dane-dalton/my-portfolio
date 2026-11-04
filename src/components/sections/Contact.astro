@@ -64,6 +64,7 @@ const inputClass =
     class="mt-12 grid gap-12 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:gap-16"
   >
     <form
+      data-reveal
       method="POST"
       action={"/contact/sent" + actions.contact}
       class="space-y-5"
@@ -134,7 +135,7 @@ const inputClass =
       <div class="flex flex-wrap items-center gap-x-5 gap-y-3 pt-1">
         <button
           type="submit"
-          class="rounded-full bg-sunset px-6 py-2.5 text-sm font-semibold text-on-sunset transition-[filter] hover:brightness-110 disabled:cursor-wait disabled:opacity-70"
+          class="button-sunset px-6 py-2.5 text-sm disabled:cursor-wait disabled:opacity-70"
           data-submit
         >
           Send message
@@ -143,7 +144,7 @@ const inputClass =
       </div>
     </form>
 
-    <aside aria-label="Other ways to reach me" class="space-y-8">
+    <aside aria-label="Other ways to reach me" class="space-y-8" data-reveal>
       <div>
         <p class="font-mono text-label text-muted uppercase">Email</p>
         <p class="mt-2 font-mono text-lg break-all select-all sm:text-xl">
@@ -165,12 +166,7 @@ const inputClass =
           {
             otherLinks.map(({ label, href }) => (
               <li>
-                <a
-                  href={href}
-                  target="_blank"
-                  rel="noopener"
-                  class="border-b border-line pb-0.5 transition-colors hover:border-amber"
-                >
+                <a href={href} target="_blank" rel="noopener" class="link-line">
                   {label} <span aria-hidden="true">↗</span>
                   <span class="sr-only">(opens in a new tab)</span>
                 </a>

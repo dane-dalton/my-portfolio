@@ -59,6 +59,71 @@
   color: transparent;
 }
 
+/* Standalone links (Résumé ↗, GitHub ↗): a thin rule that turns amber. */
+@utility link-line {
+  border-bottom: 1px solid var(--color-line);
+  padding-bottom: 0.125rem;
+  transition:
+    border-color 150ms ease,
+    color 150ms ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--color-amber);
+    color: var(--color-ink);
+  }
+}
+
+/* Links inside running text. */
+@utility link-inline {
+  color: var(--color-ink);
+  text-decoration-line: underline;
+  text-decoration-color: color-mix(
+    in srgb,
+    var(--color-amber) 55%,
+    transparent
+  );
+  text-underline-offset: 4px;
+  transition: text-decoration-color 150ms ease;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration-color: var(--color-amber);
+  }
+}
+
+/* Primary call to action: the sunset pill. */
+@utility button-sunset {
+  display: inline-block;
+  border-radius: 9999px;
+  background-image: linear-gradient(90deg, var(--color-sun), var(--color-rose));
+  color: var(--color-on-sunset);
+  font-weight: 600;
+  transition:
+    filter 150ms ease,
+    transform 150ms ease;
+
+  &:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+/*
+ * Motion: elements marked data-intro, data-reveal or in an animated Big Dipper
+ * start hidden only while <html> has the "motion" class (see BaseLayout).
+ */
+.motion [data-intro],
+.motion [data-reveal],
+.motion [data-dipper-intro] [data-dipper-star],
+.motion [data-dipper-intro] [data-dipper-part] {
+  opacity: 0;
+}
+
 @layer base {
   :root {
     color-scheme: dark;

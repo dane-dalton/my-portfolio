@@ -13,6 +13,8 @@ interface StarLink {
 interface Props {
   /** Which stars link where. Stars without a link are drawn plain. */
   links?: Partial<Record<StarName, StarLink>>;
+  /** Light the stars up one by one when the page loads (landing section only). */
+  animate?: boolean;
   class?: string;
 }
 
@@ -23,7 +25,7 @@ const defaultLinks: Partial<Record<StarName, StarLink>> = {
   Alkaid: { href: "#contact", label: "Contact" },
 };
 
-const { links = defaultLinks, class: className } = Astro.props;
+const { links = defaultLinks, animate = false, class: className } = Astro.props;
 
 const stars: { name: StarName; x: number; y: number; r: number }[] = [
   { name: "Alkaid", x: 20, y: 70, r: 2.4 },
@@ -74,11 +76,16 @@ const hasLinks = Object.keys(links).length > 0;
     ? "The Big Dipper. Its brightest stars link to sections of this page."
     : undefined}
   aria-hidden={hasLinks ? undefined : "true"}
+  data-dipper-intro={animate ? "" : undefined}
 >
-  <polyline class="lines" points={path} aria-hidden="true"></polyline>
+  <polyline
+    class="lines"
+    points={path}
+    aria-hidden="true"
+    data-dipper-part="lines"></polyline>
 
   {
-    stars.map((star) => {
+    stars.map((star, index) => {
       const link = links[star.name];
       if (!link) {
         return (
@@ -88,6 +95,7 @@ const hasLinks = Object.keys(links).length > 0;
             cy={star.y}
             r={star.r}
             aria-hidden="true"
+            data-dipper-star={index}
           >
             <title>{star.name}</title>
           </circle>
@@ -98,6 +106,7 @@ const hasLinks = Object.keys(links).length > 0;
           href={link.href}
           aria-label={`${link.label} (${star.name})`}
           class="nav-star"
+          data-dipper-star={index}
         >
           <circle class="hit" cx={star.x} cy={star.y} r="16" />
           <circle class="ring" cx={star.x} cy={star.y} r="9" />
@@ -116,7 +125,14 @@ const hasLinks = Object.keys(links).length > 0;
     })
   }
 
-  <text class="caption" x="160" y="200" text-anchor="middle" aria-hidden="true">
+  <text
+    class="caption"
+    x="160"
+    y="200"
+    text-anchor="middle"
+    aria-hidden="true"
+    data-dipper-part="caption"
+  >
     URSA MAJOR · ASTERISM
   </text>
 </svg>
@@ -148,7 +164,11 @@ const hasLinks = Object.keys(links).length > 0;
 
   .dot {
     fill: var(--color-amber);
-    transition: fill 150ms ease;
+    transform-box: fill-box;
+    transform-origin: center;
+    transition:
+      fill 150ms ease,
+      transform 150ms ease;
   }
 
   .label {
@@ -184,5 +204,6 @@ const hasLinks = Object.keys(links).length > 0;
   .nav-star:hover .dot,
   .nav-star:focus-visible .dot {
     fill: var(--color-ink);
+    transform: scale(1.3);
   }
 </style>
