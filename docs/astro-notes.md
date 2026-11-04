@@ -380,3 +380,6 @@ By default Astro inlines only small stylesheets (`"auto"`, under about 4 KB) and
 | Layout shift / blocking time | 0 / 0 ms | 0 / 0 ms |
 
 Run it yourself: `npm run build`, serve `.vercel/output/static`, and run `npx lighthouse <url>`. The remaining "cache lifetime" and "document latency" hints come from the plain local server, which doesn't compress or set cache headers. Vercel does both.
+
+### Cross-browser check (Playwright 1.64, production build)
+Chromium, Firefox and WebKit (Safari's engine), each at 1280×800 and 375×812 and with `prefers-reduced-motion: reduce`. In every run: no console errors, nothing left hidden after scrolling, no horizontal scroll, all three fonts loaded, the gradient name rendered, and the Experience nav link landed the section just under the sticky header. With reduced motion, nothing was ever hidden. WebKit needed the system library `libavif16` to start.
