@@ -111,6 +111,32 @@ docs/           redesign plan, content, Astro notes, screenshots
 
 `main` deploys to danezdalton.com on Vercel. Work happens on `staging` (or a branch off it), which gets its own preview URL; `staging` is merged into `main` to go live.
 
+## How I built it with Claude
+
+I rebuilt this site with [Claude Code](https://claude.com/claude-code), Anthropic's coding agent, as a pair programmer. I made the decisions; Claude drafted options, wrote most of the code, and tested it. Here's how we split the work.
+
+**Planning**
+
+- I described what I wanted: one page with Landing, About, Experience and Contact; the space and sunset theme from the old site; the Big Dipper as navigation. I shared a couple of portfolios I liked.
+- Claude mocked up theme drafts as interactive pages. I picked one, asked to combine it with the sunset colors from another, then chose the final "Horizon Chart" look.
+- We compared stacks. I chose Astro over staying on React, and left React out entirely.
+- Claude wrote [`docs/redesign-plan.md`](docs/redesign-plan.md): ten phases, each with its own prompt, plus a list of open questions. I answered them (contact form instead of a mailto link, dark only, headshot in About, "open to inquiries" without looking like I'm job hunting, which details stay résumé-only).
+- Claude pulled my experience together from my résumé and LinkedIn into [`docs/content.md`](docs/content.md). I corrected and approved the wording before any of it went on the page.
+
+**Building**
+
+- Each phase ran from its prompt on its own branch off `staging`. I reviewed the result, and only said "merge it" and "push it" once I was happy. Nothing went to `main`, which deploys straight to the live site.
+- Since I was learning Astro, Claude ended every phase with notes on the Astro concepts it used and why. Those are in [`docs/astro-notes.md`](docs/astro-notes.md).
+- With my OK, Claude also fixed setup outside the code: the Vercel Node version (the cause of the failing builds), and the DNS records for sending email through Resend.
+
+**Testing**
+
+- After each phase: `npm run build` (type-check and build) and `npm run lint` (including accessibility rules) had to pass.
+- Claude checked every phase in a browser at desktop and phone sizes, and compared it against the design.
+- The contact form was tested end to end on a Vercel preview, including spam traps and the no-JavaScript fallback. A real message arrived in my inbox before we called it done.
+- Lighthouse audits on mobile, fixing what they found (input border contrast, accessible link names) until Accessibility, Best Practices and SEO reached 100.
+- Cross-browser checks with Playwright in Chromium, Firefox and WebKit (the engine behind Safari), at desktop and phone sizes.
+
 ## Contact
 
 Use the form at [danezdalton.com/#contact](https://www.danezdalton.com/#contact).
