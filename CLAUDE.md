@@ -9,7 +9,7 @@ Dane Dalton's personal portfolio, danezdalton.com, being redesigned as a single-
 - Content collections for experience and projects (from Phase 6)
 - Small client `<script>`s inside `.astro` components for interactivity. **No React** unless a piece clearly needs it.
 - Motion for animation: `animate` from `motion/mini` plus `inView`/`stagger`, in `src/scripts/motion.ts`. Mark elements with `data-intro` (landing sequence) or `data-reveal` (scroll reveal).
-- Contact form: Astro Action + `@astrojs/vercel` adapter + Resend (Phase 7)
+- Contact form: Astro Action + `@astrojs/vercel` adapter + Resend (Phase 7). Needs `RESEND_API_KEY` and `CONTACT_TO_EMAIL` (and optionally `CONTACT_FROM_EMAIL`) in a local `.env` and in Vercel; declared in `astro.config.mjs` under `env.schema`.
 - Hosted on Vercel. Node 24 (`engines` in package.json).
 
 ## Commands
