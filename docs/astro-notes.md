@@ -450,3 +450,12 @@ A one-page map of the Astro concepts used, where each one lives, and what to lea
 4. **Custom content loaders:** pull projects straight from the GitHub API at build time instead of YAML files.
 5. **Middleware and sessions:** per-request logic like rate-limiting the contact form, if spam ever gets through the honeypot.
 6. **`experimental` flags in the config reference:** where Astro previews features before they're stable.
+
+## Follow-up: golden, tilted sunset gradient
+
+A design tweak: the gradient's start color moved from orange (`#ff8a3d`) to gold (`#ffa940`), and the gradient now runs at 60° so the gold sits at the lower left, like light near the horizon.
+
+- **One global stylesheet:** `src/styles/global.css` is imported once in `BaseLayout.astro`. Astro bundles it and, with `build.inlineStylesheets: "always"`, inlines it into every page. A token change there reaches every component without editing any `.astro` file.
+- **Global vs. scoped styles:** the gradient could have gone in each component's `<style>` block, which Astro scopes to that component. Global made more sense here because the name, the main button and the contact button all share it.
+- **Options for where the value lives:** a `@theme` token (which Tailwind would also turn into utilities), a plain custom property, or repeating `linear-gradient(...)` in each utility. I used a plain custom property, `--gradient-sunset` on `:root`, because only the three `@utility` rules use it. One definition keeps the tilt the same everywhere.
+- **Knock-on effects:** because `--color-sun` changed, the landing's horizon glow and the active nav item got warmer too. Contrast of the dark button text went up (8.1:1 → 10:1).

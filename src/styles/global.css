@@ -16,7 +16,7 @@
   --color-line: rgb(241 233 220 / 0.14);
 
   /* Sunset */
-  --color-sun: #ff8a3d;
+  --color-sun: #ffa940;
   --color-rose: #ff4f7b;
   --color-amber: #f4b860;
   --color-plum: #5a1f5e;
@@ -48,13 +48,16 @@
   --font-mono: var(--font-mono-src);
 }
 
-/* Orange-to-rose gradient for the main button and the last name. */
+/*
+ * Golden-to-rose gradient for the main button, the last name and dates.
+ * Tilted so the gold sits low on the left, like light near the horizon.
+ */
 @utility bg-sunset {
-  background-image: linear-gradient(90deg, var(--color-sun), var(--color-rose));
+  background-image: var(--gradient-sunset);
 }
 
 @utility text-sunset {
-  background-image: linear-gradient(90deg, var(--color-sun), var(--color-rose));
+  background-image: var(--gradient-sunset);
   background-clip: text;
   color: transparent;
 }
@@ -96,7 +99,7 @@
 @utility button-sunset {
   display: inline-block;
   border-radius: 9999px;
-  background-image: linear-gradient(90deg, var(--color-sun), var(--color-rose));
+  background-image: var(--gradient-sunset);
   color: var(--color-on-sunset);
   font-weight: 600;
   transition:
@@ -127,6 +130,11 @@
 @layer base {
   :root {
     color-scheme: dark;
+    --gradient-sunset: linear-gradient(
+      60deg,
+      var(--color-sun) 15%,
+      var(--color-rose)
+    );
   }
 
   html {
